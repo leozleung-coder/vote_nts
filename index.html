@@ -59,68 +59,108 @@
 <body class="bg-gray-50 text-gray-800 font-sans h-screen w-screen overflow-hidden flex flex-col">
 
     <!-- MAIN VOTING SCREEN -->
-    <div id="votingScreen" class="flex-1 flex flex-col p-4 md:p-6 h-full relative overflow-y-auto">
+    <!-- CHANGED: overflow-y-auto to overflow-hidden, added flex/flex-col to fill height -->
+    <div id="votingScreen" class="flex-1 flex flex-col p-3 md:p-4 h-full relative overflow-hidden">
         
         <!-- Header -->
-        <div class="text-center mb-6 mt-4">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Select Your Formation</h1>
+        <div class="text-center mb-2 mt-2 shrink-0">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Select Your Formation/Department</h1>
         </div>
 
-        <!-- Grid of Formations -->
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 flex-1 min-h-0 pb-6">
-            <!-- TWDIST -->
-            <button onclick="castVote('TWDIST')" class="vote-btn flex flex-col items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-2xl shadow-lg transition-all duration-200 py-4 md:py-0">
-                <span class="text-3xl md:text-5xl font-bold text-center break-words max-w-full px-2">TWDIST</span>
-            </button>
+        <!-- Content Container - Fills remaining height -->
+        <div class="flex-1 flex flex-col gap-2 min-h-0 pb-12">
             
-            <!-- KWTDIST -->
-            <button onclick="castVote('KWTDIST')" class="vote-btn flex flex-col items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl shadow-lg transition-all duration-200 py-4 md:py-0">
-                <span class="text-3xl md:text-5xl font-bold text-center break-words max-w-full px-2">KWTDIST</span>
-            </button>
+            <!-- Formations Section (Larger Share) -->
+            <div class="flex flex-col flex-[3] gap-1 min-h-0">
+                <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wide border-b border-gray-200 pb-1 shrink-0">Formations</h2>
+                <!-- Grid fills available height -->
+                <div class="grid grid-cols-3 gap-2 flex-1 min-h-0">
+                    <!-- TWDIST (Blue) -->
+                    <button onclick="window.castVote('TWDIST')" class="vote-btn flex flex-col items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">TWDIST</span>
+                    </button>
+                    
+                    <!-- KWTDIST (Indigo) -->
+                    <button onclick="window.castVote('KWTDIST')" class="vote-btn flex flex-col items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">KWTDIST</span>
+                    </button>
 
-            <!-- STDIST -->
-            <button onclick="castVote('STDIST')" class="vote-btn flex flex-col items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl shadow-lg transition-all duration-200 py-4 md:py-0">
-                <span class="text-3xl md:text-5xl font-bold text-center break-words max-w-full px-2">STDIST</span>
-            </button>
+                    <!-- STDIST (Emerald) -->
+                    <button onclick="window.castVote('STDIST')" class="vote-btn flex flex-col items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">STDIST</span>
+                    </button>
 
-            <!-- APTDIST -->
-            <button onclick="castVote('APTDIST')" class="vote-btn flex flex-col items-center justify-center bg-orange-500 hover:bg-orange-600 text-white rounded-2xl shadow-lg transition-all duration-200 py-4 md:py-0">
-                <span class="text-3xl md:text-5xl font-bold text-center break-words max-w-full px-2">APTDIST</span>
-            </button>
+                    <!-- APTDIST (Orange) -->
+                    <button onclick="window.castVote('APTDIST')" class="vote-btn flex flex-col items-center justify-center bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">APTDIST</span>
+                    </button>
 
-            <!-- LTDIST -->
-            <button onclick="castVote('LTDIST')" class="vote-btn flex flex-col items-center justify-center bg-pink-600 hover:bg-pink-700 text-white rounded-2xl shadow-lg transition-all duration-200 py-4 md:py-0">
-                <span class="text-3xl md:text-5xl font-bold text-center break-words max-w-full px-2">LTDIST</span>
-            </button>
+                    <!-- LTDIST (Pink) -->
+                    <button onclick="window.castVote('LTDIST')" class="vote-btn flex flex-col items-center justify-center bg-pink-600 hover:bg-pink-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">LTDIST</span>
+                    </button>
 
-            <!-- Traffic -->
-            <button onclick="castVote('Traffic')" class="vote-btn flex flex-col items-center justify-center bg-purple-600 hover:bg-purple-700 text-white rounded-2xl shadow-lg transition-all duration-200 py-4 md:py-0">
-                <span class="text-3xl md:text-5xl font-bold text-center break-words max-w-full px-2">Traffic</span>
-            </button>
+                    <!-- Traffic (Purple) -->
+                    <button onclick="window.castVote('Traffic')" class="vote-btn flex flex-col items-center justify-center bg-purple-600 hover:bg-purple-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">Traffic</span>
+                    </button>
 
-             <!-- OPS -->
-             <button onclick="castVote('OPS')" class="vote-btn flex flex-col items-center justify-center bg-red-600 hover:bg-red-700 text-white rounded-2xl shadow-lg transition-all duration-200 py-4 md:py-0">
-                <span class="text-3xl md:text-5xl font-bold text-center break-words max-w-full px-2">OPS</span>
-            </button>
+                     <!-- OPS (Red) -->
+                     <button onclick="window.castVote('OPS')" class="vote-btn flex flex-col items-center justify-center bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">OPS</span>
+                    </button>
 
-             <!-- Crime -->
-             <button onclick="castVote('Crime')" class="vote-btn flex flex-col items-center justify-center bg-cyan-600 hover:bg-cyan-700 text-white rounded-2xl shadow-lg transition-all duration-200 py-4 md:py-0">
-                <span class="text-3xl md:text-5xl font-bold text-center break-words max-w-full px-2">Crime</span>
-            </button>
+                     <!-- Crime (Cyan) -->
+                     <button onclick="window.castVote('Crime')" class="vote-btn flex flex-col items-center justify-center bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">Crime</span>
+                    </button>
 
-             <!-- RHQ -->
-             <button onclick="castVote('RHQ')" class="vote-btn flex flex-col items-center justify-center bg-slate-600 hover:bg-slate-700 text-white rounded-2xl shadow-lg transition-all duration-200 col-span-2 md:col-span-1 py-4 md:py-0">
-                <span class="text-3xl md:text-5xl font-bold text-center break-words max-w-full px-2">RHQ</span>
-            </button>
+                     <!-- RHQ (Slate) -->
+                     <button onclick="window.castVote('RHQ')" class="vote-btn flex flex-col items-center justify-center bg-slate-600 hover:bg-slate-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">RHQ</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Departments Section (Smaller Share) -->
+            <div class="flex flex-col flex-[2] gap-1 min-h-0">
+                <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wide border-b border-gray-200 pb-1 shrink-0">Departments</h2>
+                <div class="grid grid-cols-3 gap-2 flex-1 min-h-0">
+                    <!-- FSD (Rose) -->
+                    <button onclick="window.castVote('FSD')" class="vote-btn flex flex-col items-center justify-center bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">FSD</span>
+                    </button>
+
+                    <!-- C&E (Teal) -->
+                    <button onclick="window.castVote('C&E')" class="vote-btn flex flex-col items-center justify-center bg-teal-600 hover:bg-teal-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">C&E</span>
+                    </button>
+
+                    <!-- IMMD (Yellow/Amber - Distinct from Orange) -->
+                    <button onclick="window.castVote('IMMD')" class="vote-btn flex flex-col items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">IMMD</span>
+                    </button>
+
+                    <!-- GFS (Sky) -->
+                    <button onclick="window.castVote('GFS')" class="vote-btn flex flex-col items-center justify-center bg-sky-500 hover:bg-sky-600 text-white rounded-xl shadow-md transition-all duration-200">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">GFS</span>
+                    </button>
+
+                    <!-- Others (Stone/Brown) -->
+                    <button onclick="window.castVote('Others')" class="vote-btn flex flex-col items-center justify-center bg-stone-500 hover:bg-stone-600 text-white rounded-xl shadow-md transition-all duration-200 col-span-2">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">Others</span>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Settings & Fullscreen Controls -->
-        <div class="fixed top-6 left-6 z-20 flex gap-3">
-            <button onclick="openPasswordModal()" class="p-3 bg-gray-200/80 backdrop-blur-sm text-gray-600 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
-                <i data-lucide="settings" class="w-6 h-6"></i>
+        <div class="fixed top-4 left-4 z-20 flex gap-2">
+            <button onclick="window.openPasswordModal()" class="p-2 bg-gray-200/80 backdrop-blur-sm text-gray-600 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
+                <i data-lucide="settings" class="w-5 h-5"></i>
             </button>
-            <button onclick="toggleFullscreen()" class="p-3 bg-gray-200/80 backdrop-blur-sm text-gray-600 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
-                <i data-lucide="maximize" class="w-6 h-6"></i>
+            <button onclick="window.toggleFullscreen()" class="p-2 bg-gray-200/80 backdrop-blur-sm text-gray-600 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
+                <i data-lucide="maximize" class="w-5 h-5"></i>
             </button>
         </div>
     </div>
@@ -139,7 +179,7 @@
         <div class="bg-white rounded-xl p-6 w-full max-w-sm mx-4 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold">Admin Access</h3>
-                <button onclick="closePasswordModal()" class="text-gray-400 hover:text-gray-600">
+                <button onclick="window.closePasswordModal()" class="text-gray-400 hover:text-gray-600">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
@@ -152,23 +192,23 @@
             <p id="passwordError" class="text-red-500 text-sm mb-3 hidden text-center">Incorrect Password</p>
 
             <div class="grid grid-cols-3 gap-3 mb-2">
-                <button onclick="numpadInput(1)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">1</button>
-                <button onclick="numpadInput(2)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">2</button>
-                <button onclick="numpadInput(3)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">3</button>
+                <button onclick="window.numpadInput(1)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">1</button>
+                <button onclick="window.numpadInput(2)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">2</button>
+                <button onclick="window.numpadInput(3)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">3</button>
                 
-                <button onclick="numpadInput(4)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">4</button>
-                <button onclick="numpadInput(5)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">5</button>
-                <button onclick="numpadInput(6)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">6</button>
+                <button onclick="window.numpadInput(4)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">4</button>
+                <button onclick="window.numpadInput(5)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">5</button>
+                <button onclick="window.numpadInput(6)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">6</button>
                 
-                <button onclick="numpadInput(7)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">7</button>
-                <button onclick="numpadInput(8)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">8</button>
-                <button onclick="numpadInput(9)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">9</button>
+                <button onclick="window.numpadInput(7)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">7</button>
+                <button onclick="window.numpadInput(8)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">8</button>
+                <button onclick="window.numpadInput(9)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">9</button>
                 
-                <button onclick="numpadClear()" class="numpad-btn h-16 bg-red-50 border border-red-100 rounded-lg text-red-600 font-semibold shadow-sm hover:bg-red-100 transition-colors flex items-center justify-center">
+                <button onclick="window.numpadClear()" class="numpad-btn h-16 bg-red-50 border border-red-100 rounded-lg text-red-600 font-semibold shadow-sm hover:bg-red-100 transition-colors flex items-center justify-center">
                     <i data-lucide="delete" class="w-6 h-6"></i>
                 </button>
-                <button onclick="numpadInput(0)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">0</button>
-                <button onclick="checkPassword()" class="numpad-btn h-16 bg-blue-600 border border-blue-600 rounded-lg text-white font-bold shadow-sm hover:bg-blue-700 transition-colors flex items-center justify-center">
+                <button onclick="window.numpadInput(0)" class="numpad-btn h-16 bg-white border border-gray-200 rounded-lg text-2xl font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">0</button>
+                <button onclick="window.checkPassword()" class="numpad-btn h-16 bg-blue-600 border border-blue-600 rounded-lg text-white font-bold shadow-sm hover:bg-blue-700 transition-colors flex items-center justify-center">
                     GO
                 </button>
             </div>
@@ -183,7 +223,7 @@
                     <h3 class="text-xl font-bold text-gray-800" id="hourDetailTitle">Hour 12</h3>
                     <p class="text-sm text-gray-500">Total: <span id="hourDetailTotal" class="font-bold">0</span></p>
                 </div>
-                <button onclick="closeHourDetailModal()" class="text-gray-400 hover:text-gray-600">
+                <button onclick="window.closeHourDetailModal()" class="text-gray-400 hover:text-gray-600">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
@@ -192,7 +232,7 @@
                 <!-- Details injected here -->
             </div>
             
-            <button onclick="closeHourDetailModal()" class="mt-4 w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-200 shrink-0">
+            <button onclick="window.closeHourDetailModal()" class="mt-4 w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-200 shrink-0">
                 Close
             </button>
         </div>
@@ -206,7 +246,7 @@
                 <i data-lucide="bar-chart-2" class="w-5 h-5 md:w-6 md:h-6 text-blue-600"></i>
                 Results Dashboard
             </h2>
-            <button onclick="closeAdmin()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-300 text-sm md:text-base">
+            <button onclick="window.closeAdmin()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-300 text-sm md:text-base">
                 Close
             </button>
         </div>
@@ -226,7 +266,7 @@
                     </div>
                 </div>
                 
-                <button onclick="confirmReset()" class="flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 px-3 py-2 md:px-4 md:py-2 rounded-lg font-bold hover:bg-red-600 hover:text-white transition-colors text-xs md:text-sm">
+                <button onclick="window.confirmReset()" class="flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 px-3 py-2 md:px-4 md:py-2 rounded-lg font-bold hover:bg-red-600 hover:text-white transition-colors text-xs md:text-sm">
                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                     <span>Reset Data</span>
                 </button>
@@ -235,8 +275,8 @@
             <!-- Tab Switcher -->
             <div class="flex justify-center shrink-0">
                 <div class="bg-gray-200 p-1 rounded-lg flex">
-                    <button onclick="switchTab('dept')" id="tab-dept" class="px-6 py-1.5 rounded-md text-sm font-semibold transition-all shadow-sm bg-white text-gray-800">By Formation</button>
-                    <button onclick="switchTab('hour')" id="tab-hour" class="px-6 py-1.5 rounded-md text-sm font-semibold transition-all text-gray-500 hover:text-gray-700">By Hour</button>
+                    <button onclick="window.switchTab('dept')" id="tab-dept" class="px-6 py-1.5 rounded-md text-sm font-semibold transition-all shadow-sm bg-white text-gray-800">By Formation</button>
+                    <button onclick="window.switchTab('hour')" id="tab-hour" class="px-6 py-1.5 rounded-md text-sm font-semibold transition-all text-gray-500 hover:text-gray-700">By Hour</button>
                 </div>
             </div>
 
@@ -244,8 +284,9 @@
             <div class="bg-white rounded-xl p-3 md:p-4 shadow-sm flex-1 min-h-0 flex flex-col overflow-hidden relative">
                 
                 <!-- DEPT VIEW (Grid) -->
-                <div id="deptView" class="grid grid-cols-3 gap-2 md:gap-4 flex-1 h-full overflow-hidden">
+                <div id="deptView" class="grid grid-cols-4 md:grid-cols-5 gap-2 flex-1 h-full overflow-hidden">
                     <!-- JS Injected Cards -->
+                    <div class="col-span-4 md:col-span-5 flex items-center justify-center text-gray-400">Loading data...</div>
                 </div>
 
                 <!-- HOURLY VIEW (Stacked Bar Chart) -->
@@ -278,18 +319,28 @@
             <h3 class="text-xl font-bold mb-2">Are you sure?</h3>
             <p class="text-gray-500 mb-6">This will reset ALL formation counts and hourly logs.</p>
             <div class="grid grid-cols-2 gap-3">
-                <button onclick="closeResetConfirm()" class="py-2 rounded-lg border border-gray-300 text-gray-700 font-medium">Cancel</button>
-                <button onclick="executeReset()" class="py-2 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700">Yes, Reset</button>
+                <button onclick="window.closeResetConfirm()" class="py-2 rounded-lg border border-gray-300 text-gray-700 font-medium">Cancel</button>
+                <button onclick="window.executeReset()" class="py-2 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700">Yes, Reset</button>
             </div>
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        // Firebase Imports - Using a stable v10 version for compatibility
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+        import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+        import { getFirestore, doc, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+
         // Initialize Icons
         lucide.createIcons();
 
         // Data Management
-        const DEPARTMENTS = ['TWDIST', 'KWTDIST', 'STDIST', 'APTDIST', 'LTDIST', 'Traffic', 'OPS', 'Crime', 'RHQ'];
+        const DEPARTMENTS = [
+            'TWDIST', 'KWTDIST', 'STDIST', 'APTDIST', 'LTDIST', 'Traffic', 'OPS', 'Crime', 'RHQ',
+            'FSD', 'C&E', 'IMMD', 'GFS', 'Others'
+        ];
+        
+        // Distinct Colors Map
         const COLOR_MAP = {
             'TWDIST': 'bg-blue-600',
             'KWTDIST': 'bg-indigo-600',
@@ -299,47 +350,108 @@
             'Traffic': 'bg-purple-600',
             'OPS': 'bg-red-600',
             'Crime': 'bg-cyan-600',
-            'RHQ': 'bg-slate-600'
+            'RHQ': 'bg-slate-600',
+            'FSD': 'bg-rose-600',
+            'C&E': 'bg-teal-600',
+            'IMMD': 'bg-yellow-600',
+            'GFS': 'bg-sky-500',
+            'Others': 'bg-stone-500'
         };
 
-        const STORAGE_KEY = 'ipad_voting_app_data_v4';
+        // --- FIREBASE CONFIG & SETUP ---
+        // Provided by User
+        const firebaseConfig = {
+            apiKey: "AIzaSyBSw2oLLWkShOmp6TaTEqhH38tib4PFLdo",
+            authDomain: "vote-nts.firebaseapp.com",
+            projectId: "vote-nts",
+            storageBucket: "vote-nts.firebasestorage.app",
+            messagingSenderId: "505310746510",
+            appId: "1:505310746510:web:25fcc605239abf2ff576df"
+        };
         
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
         let appData = {
             deptCounts: {},
             hourlyCounts: {} 
         };
+        
+        let currentUser = null;
 
-        // Init empty structures
-        DEPARTMENTS.forEach(d => appData.deptCounts[d] = 0);
-        for(let i=0; i<24; i++) {
-            appData.hourlyCounts[i] = {};
-            DEPARTMENTS.forEach(d => appData.hourlyCounts[i][d] = 0);
+        // Init empty structures locally first
+        function initEmptyData() {
+            const data = { deptCounts: {}, hourlyCounts: {} };
+            DEPARTMENTS.forEach(d => data.deptCounts[d] = 0);
+            for(let i=0; i<24; i++) {
+                data.hourlyCounts[i] = {};
+                DEPARTMENTS.forEach(d => data.hourlyCounts[i][d] = 0);
+            }
+            return data;
         }
+        appData = initEmptyData();
 
-        function loadData() {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                try {
-                    const parsed = JSON.parse(stored);
-                    if(parsed.deptCounts) appData.deptCounts = { ...appData.deptCounts, ...parsed.deptCounts };
-                    if(parsed.hourlyCounts) {
+        // --- AUTHENTICATION & DATA SYNC ---
+        const initAuth = async () => {
+            try {
+                console.log("Attempting Anonymous Sign-In...");
+                await signInAnonymously(auth);
+            } catch (error) {
+                console.error("Auth Error (Check 'Sign-in method' in Firebase Console):", error);
+            }
+        };
+
+        initAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                console.log("User Signed In:", user.uid);
+                subscribeToData();
+            } else {
+                console.log("User Signed Out");
+            }
+        });
+
+        // --- FIRESTORE LISTENERS ---
+        function subscribeToData() {
+            if (!currentUser) return;
+            
+            // Simplified Path for Personal Projects
+            const summaryDocRef = doc(db, 'voting_app', 'stats');
+
+            onSnapshot(summaryDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    console.log("Data Received");
+                    const data = docSnap.data();
+                    // Merge logic
+                    if (data.deptCounts) appData.deptCounts = { ...appData.deptCounts, ...data.deptCounts };
+                    if (data.hourlyCounts) {
                         for(let i=0; i<24; i++) {
-                            if (parsed.hourlyCounts[i]) {
-                                appData.hourlyCounts[i] = { ...appData.hourlyCounts[i], ...parsed.hourlyCounts[i] };
+                            if (data.hourlyCounts[i]) {
+                                appData.hourlyCounts[i] = { ...appData.hourlyCounts[i], ...data.hourlyCounts[i] };
                             }
                         }
                     }
-                } catch(e) {
-                    console.error("Data load error, resetting");
+                    
+                    // Update UI if Admin is open
+                    if (!document.getElementById('adminScreen').classList.contains('hidden')) {
+                        window.renderStats();
+                    }
+                } else {
+                    console.log("No data found, initializing...");
+                    // Initialize if not exists (first run)
+                    setDoc(summaryDocRef, appData).catch(err => console.error("Init Data Failed (Check Rules):", err));
                 }
-            }
+            }, (error) => {
+                console.error("Data Listen Error (Check Firestore Rules):", error);
+            });
         }
-        loadData();
 
-        // -----------------------
-        // Fullscreen Logic
-        // -----------------------
-        function toggleFullscreen() {
+        // --- GLOBAL FUNCTIONS ATTACHED TO WINDOW ---
+
+        window.toggleFullscreen = function() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
                     console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
@@ -349,18 +461,16 @@
                     document.exitFullscreen();
                 }
             }
-        }
+        };
 
-        // -----------------------
-        // Voting Logic
-        // -----------------------
-        function castVote(dept) {
+        window.castVote = async function(dept) {
+            // Optimistic Update
             appData.deptCounts[dept]++;
             const currentHour = new Date().getHours();
             if (!appData.hourlyCounts[currentHour]) appData.hourlyCounts[currentHour] = {};
             appData.hourlyCounts[currentHour][dept] = (appData.hourlyCounts[currentHour][dept] || 0) + 1;
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
 
+            // Show Feedback immediately
             const overlay = document.getElementById('thankYouOverlay');
             const card = document.getElementById('thankYouCard');
             overlay.classList.remove('hidden');
@@ -375,78 +485,84 @@
                 card.classList.remove('scale-100');
                 setTimeout(() => { overlay.classList.add('hidden'); }, 300);
             }, 1500);
-        }
 
-        // -----------------------
-        // Admin / Password Logic
-        // -----------------------
+            // Sync to Firebase
+            if (currentUser) {
+                const summaryDocRef = doc(db, 'voting_app', 'stats');
+                try {
+                    await setDoc(summaryDocRef, appData);
+                } catch (e) {
+                    console.error("Save failed (Check Firestore Rules):", e);
+                }
+            }
+        };
+
+        // --- Admin / Password Logic ---
         let inputBuffer = "";
         const CORRECT_PASS = "112233";
 
-        function openPasswordModal() {
+        window.openPasswordModal = function() {
             document.getElementById('passwordModal').classList.remove('hidden');
             document.getElementById('passwordError').classList.add('hidden');
             inputBuffer = "";
-            updatePasswordDisplay();
-        }
+            window.updatePasswordDisplay();
+        };
 
-        function closePasswordModal() {
+        window.closePasswordModal = function() {
             document.getElementById('passwordModal').classList.add('hidden');
             inputBuffer = "";
-        }
+        };
 
-        function numpadInput(num) {
+        window.numpadInput = function(num) {
             if (inputBuffer.length < 10) {
                 inputBuffer += num.toString();
-                updatePasswordDisplay();
+                window.updatePasswordDisplay();
                 document.getElementById('passwordError').classList.add('hidden');
             }
-        }
+        };
 
-        function numpadClear() {
+        window.numpadClear = function() {
             inputBuffer = inputBuffer.slice(0, -1);
-            updatePasswordDisplay();
-        }
+            window.updatePasswordDisplay();
+        };
 
-        function updatePasswordDisplay() {
+        window.updatePasswordDisplay = function() {
             const display = document.getElementById('passwordDisplay');
             if (inputBuffer.length === 0) {
                 display.innerHTML = '<span class="text-gray-300">Enter PIN</span>';
             } else {
                 display.innerHTML = '•'.repeat(inputBuffer.length);
             }
-        }
+        };
 
-        function checkPassword() {
+        window.checkPassword = function() {
             if (inputBuffer === CORRECT_PASS) {
-                closePasswordModal();
-                showAdmin();
+                window.closePasswordModal();
+                window.showAdmin();
             } else {
                 document.getElementById('passwordError').classList.remove('hidden');
                 inputBuffer = "";
-                updatePasswordDisplay();
+                window.updatePasswordDisplay();
             }
-        }
+        };
 
-        // -----------------------
-        // Admin Dashboard Logic
-        // -----------------------
+        // --- Admin Dashboard Logic ---
         let currentTab = 'dept';
 
-        function showAdmin() {
-            renderStats();
+        window.showAdmin = function() {
+            window.renderStats();
             const screen = document.getElementById('adminScreen');
             screen.classList.remove('hidden');
             screen.classList.add('flex');
             screen.classList.add('fade-in');
-        }
+        };
 
-        function closeAdmin() {
+        window.closeAdmin = function() {
             document.getElementById('adminScreen').classList.add('hidden');
             document.getElementById('adminScreen').classList.remove('flex');
-        }
+        };
 
-        function switchTab(tab) {
+        window.switchTab = function(tab) {
             currentTab = tab;
             const btnDept = document.getElementById('tab-dept');
             const btnHour = document.getElementById('tab-hour');
@@ -467,21 +583,21 @@
                 document.getElementById('hourView').classList.add('flex');
                 document.getElementById('deptView').classList.add('hidden');
             }
-            renderStats();
-        }
+            window.renderStats();
+        };
 
-        function renderStats() {
+        window.renderStats = function() {
             const total = Object.values(appData.deptCounts).reduce((a, b) => a + b, 0);
             document.getElementById('totalVotesDisplay').innerText = total;
 
             if (currentTab === 'dept') {
-                renderDeptGrid(total);
+                window.renderDeptGrid(total);
             } else {
-                renderHourlyChart();
+                window.renderHourlyChart();
             }
-        }
+        };
 
-        function renderDeptGrid(total) {
+        window.renderDeptGrid = function(total) {
             const container = document.getElementById('deptView');
             container.innerHTML = '';
             
@@ -491,19 +607,18 @@
                 const colorClass = COLOR_MAP[dept] || 'bg-gray-500';
                 
                 const html = `
-                    <div class="bg-gray-50 rounded-lg p-2 md:p-3 flex flex-col justify-center h-full border border-gray-100 relative">
-                         <div class="flex flex-col h-full justify-between">
+                    <div class="bg-gray-50 rounded-lg p-1.5 md:p-2 flex flex-col justify-between h-full border border-gray-100 relative min-h-0">
+                         <div class="flex flex-col justify-center h-full">
                             <div>
-                                <span class="block text-xs md:text-sm font-semibold text-gray-500 mb-0.5">${dept}</span>
-                                <span class="block text-xl md:text-3xl font-bold text-gray-800 leading-none">${count}</span>
+                                <span class="block text-[10px] md:text-xs font-semibold text-gray-500 mb-0.5 truncate">${dept}</span>
+                                <span class="block text-lg md:text-2xl font-bold text-gray-800 leading-none">${count}</span>
                             </div>
                             
-                            <div class="mt-2">
-                                <div class="flex justify-between text-xs text-gray-400 mb-1">
-                                    <span>Share</span>
+                            <div class="mt-1 md:mt-2">
+                                <div class="flex justify-between text-[10px] text-gray-400 mb-0.5">
                                     <span>${percentage}%</span>
                                 </div>
-                                <div class="w-full bg-gray-200 rounded-full h-1.5 md:h-2 overflow-hidden">
+                                <div class="w-full bg-gray-200 rounded-full h-1 md:h-1.5 overflow-hidden">
                                     <div class="${colorClass} h-full rounded-full transition-all duration-500" style="width: ${percentage}%"></div>
                                 </div>
                             </div>
@@ -512,12 +627,9 @@
                 `;
                 container.innerHTML += html;
             });
-        }
+        };
 
-        // -----------------------
-        // HOURLY CHART & DETAILS
-        // -----------------------
-        function renderHourlyChart() {
+        window.renderHourlyChart = function() {
             const container = document.getElementById('hourlyChartContainer');
             const legendContainer = document.getElementById('hourlyLegend');
             container.innerHTML = '';
@@ -529,7 +641,7 @@
             for(let i=0; i<24; i++) {
                 let sum = 0;
                 DEPARTMENTS.forEach(d => {
-                    sum += (appData.hourlyCounts[i][d] || 0);
+                    sum += (appData.hourlyCounts[i] ? appData.hourlyCounts[i][d] || 0 : 0);
                 });
                 hourlyTotals[i] = sum;
                 if (sum > maxTotal) maxTotal = sum;
@@ -545,7 +657,7 @@
                 let segmentsHTML = '';
                 if (total > 0) {
                     DEPARTMENTS.forEach(d => {
-                        const count = appData.hourlyCounts[i][d] || 0;
+                        const count = appData.hourlyCounts[i] ? appData.hourlyCounts[i][d] || 0 : 0;
                         if (count > 0) {
                             const segmentHeight = (count / total) * 100;
                             const color = COLOR_MAP[d];
@@ -556,9 +668,8 @@
                     segmentsHTML = `<div class="bg-gray-200 w-full h-full"></div>`;
                 }
 
-                // Added onclick and hover styles here
                 const html = `
-                    <div onclick="showHourDetails(${i})" class="flex-1 h-full flex flex-col justify-end items-center group min-w-[25px] cursor-pointer hover:bg-gray-50 rounded-lg transition-colors pb-1">
+                    <div onclick="window.showHourDetails(${i})" class="flex-1 h-full flex flex-col justify-end items-center group min-w-[25px] cursor-pointer hover:bg-gray-50 rounded-lg transition-colors pb-1">
                         <div class="text-[10px] mb-1 text-gray-400 ${total === 0 ? 'opacity-0' : ''}">${total}</div>
                         
                         <div class="w-full mx-0.5 rounded-t-sm flex flex-col-reverse overflow-hidden relative shadow-sm" style="height: ${displayHeight}%">
@@ -581,31 +692,28 @@
                 `;
                 legendContainer.innerHTML += legendHtml;
             });
-        }
+        };
 
-        function showHourDetails(hour) {
+        window.showHourDetails = function(hour) {
             const modal = document.getElementById('hourDetailModal');
             const title = document.getElementById('hourDetailTitle');
             const totalSpan = document.getElementById('hourDetailTotal');
             const list = document.getElementById('hourDetailList');
             
-            // Format title
             const start = hour.toString().padStart(2, '0') + ":00";
             const end = ((hour + 1) % 24).toString().padStart(2, '0') + ":00";
             title.innerText = `${start} - ${end}`;
             
-            // Get Data
             const data = appData.hourlyCounts[hour] || {};
             let total = 0;
             const sortedDepts = DEPARTMENTS.map(d => {
                 const count = data[d] || 0;
                 total += count;
                 return { name: d, count: count, color: COLOR_MAP[d] };
-            }).sort((a, b) => b.count - a.count); // Sort desc
+            }).sort((a, b) => b.count - a.count);
             
             totalSpan.innerText = total;
             
-            // Render List
             list.innerHTML = '';
             if (total === 0) {
                 list.innerHTML = '<p class="text-center text-gray-400 py-4 italic">No votes cast in this hour.</p>';
@@ -631,38 +739,34 @@
             
             modal.classList.remove('hidden');
             modal.classList.add('fade-in');
-        }
+        };
 
-        function closeHourDetailModal() {
+        window.closeHourDetailModal = function() {
             document.getElementById('hourDetailModal').classList.add('hidden');
-        }
+        };
 
-        // -----------------------
-        // Reset Logic
-        // -----------------------
-        function confirmReset() {
+        window.confirmReset = function() {
             document.getElementById('resetConfirmModal').classList.remove('hidden');
-        }
+        };
 
-        function closeResetConfirm() {
+        window.closeResetConfirm = function() {
             document.getElementById('resetConfirmModal').classList.add('hidden');
-        }
+        };
 
-        function executeReset() {
-            appData.deptCounts = {};
-            DEPARTMENTS.forEach(d => appData.deptCounts[d] = 0);
-            
-            appData.hourlyCounts = {};
-            for(let i=0; i<24; i++) {
-                appData.hourlyCounts[i] = {};
-                DEPARTMENTS.forEach(d => appData.hourlyCounts[i][d] = 0);
+        window.executeReset = async function() {
+            // Reset Data Object
+            appData = initEmptyData();
+
+            // Save empty data to Firestore
+            if (currentUser) {
+                // Correct Path: .../voting_summary/stats
+                const summaryDocRef = doc(db, 'voting_app', 'stats');
+                await setDoc(summaryDocRef, appData);
             }
 
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
-            renderStats();
-            closeResetConfirm();
-        }
-
+            window.renderStats();
+            window.closeResetConfirm();
+        };
     </script>
 </body>
 </html>
