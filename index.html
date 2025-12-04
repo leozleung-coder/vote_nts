@@ -156,7 +156,7 @@
 
         <!-- Settings & Fullscreen Controls -->
         <div class="fixed top-4 left-4 z-20 flex gap-2">
-            <button onclick="window.openPasswordModal()" class="p-2 bg-gray-200/80 backdrop-blur-sm text-gray-600 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
+            <button onclick="window.openPasswordModal('ADMIN')" class="p-2 bg-gray-200/80 backdrop-blur-sm text-gray-600 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
                 <i data-lucide="settings" class="w-5 h-5"></i>
             </button>
             <button onclick="window.toggleFullscreen()" class="p-2 bg-gray-200/80 backdrop-blur-sm text-gray-600 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
@@ -175,10 +175,11 @@
     </div>
 
     <!-- PASSWORD MODAL -->
-    <div id="passwordModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden backdrop-blur-sm">
+    <div id="passwordModal" class="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center hidden backdrop-blur-sm">
         <div class="bg-white rounded-xl p-6 w-full max-w-sm mx-4 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold">Admin Access</h3>
+                <!-- ID added for dynamic title -->
+                <h3 id="passwordModalTitle" class="text-xl font-bold">Admin Access</h3>
                 <button onclick="window.closePasswordModal()" class="text-gray-400 hover:text-gray-600">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
@@ -320,7 +321,8 @@
             <p class="text-gray-500 mb-6">This will reset ALL formation counts and hourly logs.</p>
             <div class="grid grid-cols-2 gap-3">
                 <button onclick="window.closeResetConfirm()" class="py-2 rounded-lg border border-gray-300 text-gray-700 font-medium">Cancel</button>
-                <button onclick="window.executeReset()" class="py-2 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700">Yes, Reset</button>
+                <!-- CHANGED: Now initiates the password flow instead of executing reset directly -->
+                <button onclick="window.initiateResetFlow()" class="py-2 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700">Yes, Reset</button>
             </div>
         </div>
     </div>
@@ -499,9 +501,20 @@
 
         // --- Admin / Password Logic ---
         let inputBuffer = "";
-        const CORRECT_PASS = "112233";
+        let currentPasswordMode = 'ADMIN'; // 'ADMIN' or 'RESET'
+        const ADMIN_PASS = "112233";
+        const RESET_PASS = "332211";
 
-        window.openPasswordModal = function() {
+        window.openPasswordModal = function(mode = 'ADMIN') {
+            currentPasswordMode = mode;
+            // Update Title
+            const titleEl = document.getElementById('passwordModalTitle');
+            if (mode === 'ADMIN') {
+                titleEl.textContent = "Admin Access";
+            } else {
+                titleEl.textContent = "Confirm Reset";
+            }
+
             document.getElementById('passwordModal').classList.remove('hidden');
             document.getElementById('passwordError').classList.add('hidden');
             inputBuffer = "";
@@ -536,14 +549,50 @@
         };
 
         window.checkPassword = function() {
-            if (inputBuffer === CORRECT_PASS) {
+            const targetPass = currentPasswordMode === 'ADMIN' ? ADMIN_PASS : RESET_PASS;
+            
+            if (inputBuffer === targetPass) {
                 window.closePasswordModal();
-                window.showAdmin();
+                if (currentPasswordMode === 'ADMIN') {
+                    window.showAdmin();
+                } else {
+                    window.executeReset();
+                }
             } else {
                 document.getElementById('passwordError').classList.remove('hidden');
                 inputBuffer = "";
                 window.updatePasswordDisplay();
             }
+        };
+
+        // --- Reset Logic ---
+        window.confirmReset = function() {
+            document.getElementById('resetConfirmModal').classList.remove('hidden');
+        };
+
+        window.closeResetConfirm = function() {
+            document.getElementById('resetConfirmModal').classList.add('hidden');
+        };
+
+        // NEW: Initiates password flow for reset
+        window.initiateResetFlow = function() {
+            window.closeResetConfirm();
+            // Open password modal in RESET mode
+            window.openPasswordModal('RESET'); 
+        };
+
+        window.executeReset = async function() {
+            // Reset Data Object
+            appData = initEmptyData();
+
+            // Save empty data to Firestore
+            if (currentUser) {
+                const summaryDocRef = doc(db, 'voting_app', 'stats');
+                await setDoc(summaryDocRef, appData);
+            }
+
+            window.renderStats();
+            // Modal closed by checkPassword
         };
 
         // --- Admin Dashboard Logic ---
