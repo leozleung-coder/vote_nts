@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Department Voting Kiosk</title>
+    <title>Formation Voting Kiosk</title>
     
     <!-- iOS Web App Capability -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Dept Vote">
+    <meta name="apple-mobile-web-app-title" content="Formation Vote">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -63,11 +63,11 @@
         
         <!-- Header -->
         <div class="text-center mb-6 mt-4">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Select Your Department</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Select Your Formation</h1>
             <p class="text-gray-500 mt-2">Tap the button below to cast your vote</p>
         </div>
 
-        <!-- Grid of Departments -->
+        <!-- Grid of Formations -->
         <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 flex-1 min-h-0 pb-6">
             <!-- TWDIST -->
             <button onclick="castVote('TWDIST')" class="vote-btn flex flex-col items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-2xl shadow-lg transition-all duration-200 py-4 md:py-0">
@@ -124,10 +124,15 @@
             </button>
         </div>
 
-        <!-- Settings Button -->
-        <button onclick="openPasswordModal()" class="fixed top-6 left-6 p-3 bg-gray-200/80 backdrop-blur-sm text-gray-600 rounded-full shadow-lg hover:bg-gray-300 transition-colors z-20">
-            <i data-lucide="settings" class="w-6 h-6"></i>
-        </button>
+        <!-- Settings & Fullscreen Controls -->
+        <div class="fixed top-6 left-6 z-20 flex gap-3">
+            <button onclick="openPasswordModal()" class="p-3 bg-gray-200/80 backdrop-blur-sm text-gray-600 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
+                <i data-lucide="settings" class="w-6 h-6"></i>
+            </button>
+            <button onclick="toggleFullscreen()" class="p-3 bg-gray-200/80 backdrop-blur-sm text-gray-600 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
+                <i data-lucide="maximize" class="w-6 h-6"></i>
+            </button>
+        </div>
     </div>
 
     <!-- THANK YOU OVERLAY -->
@@ -242,7 +247,7 @@
             <!-- Tab Switcher -->
             <div class="flex justify-center shrink-0">
                 <div class="bg-gray-200 p-1 rounded-lg flex">
-                    <button onclick="switchTab('dept')" id="tab-dept" class="px-6 py-1.5 rounded-md text-sm font-semibold transition-all shadow-sm bg-white text-gray-800">By Dept</button>
+                    <button onclick="switchTab('dept')" id="tab-dept" class="px-6 py-1.5 rounded-md text-sm font-semibold transition-all shadow-sm bg-white text-gray-800">By Formation</button>
                     <button onclick="switchTab('hour')" id="tab-hour" class="px-6 py-1.5 rounded-md text-sm font-semibold transition-all text-gray-500 hover:text-gray-700">By Hour</button>
                 </div>
             </div>
@@ -283,7 +288,7 @@
                 <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600"></i>
             </div>
             <h3 class="text-xl font-bold mb-2">Are you sure?</h3>
-            <p class="text-gray-500 mb-6">This will reset ALL department counts and hourly logs.</p>
+            <p class="text-gray-500 mb-6">This will reset ALL formation counts and hourly logs.</p>
             <div class="grid grid-cols-2 gap-3">
                 <button onclick="closeResetConfirm()" class="py-2 rounded-lg border border-gray-300 text-gray-700 font-medium">Cancel</button>
                 <button onclick="executeReset()" class="py-2 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700">Yes, Reset</button>
@@ -342,6 +347,21 @@
             }
         }
         loadData();
+
+        // -----------------------
+        // Fullscreen Logic
+        // -----------------------
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
 
         // -----------------------
         // Voting Logic
