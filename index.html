@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Department Voting Kiosk</title>
+    
+    <!-- iOS Web App Capability -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dept Vote">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Kiosk Mode Tweaks */
+        body {
+            -webkit-user-select: none; /* Safari */
+            user-select: none; /* Standard syntax */
+            touch-action: manipulation; /* Disables double-tap to zoom */
+            overscroll-behavior: none; /* Prevents pull-to-refresh */
+        }
+
+        /* Smooth transitions for view switching */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Button press effect */
+        .vote-btn:active {
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+
+        /* Custom Scrollbar for Admin Panel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans h-screen w-screen overflow-hidden flex flex-col">
+
+    <!-- MAIN VOTING SCREEN -->
+    <div id="votingScreen" class="flex-1 flex flex-col p-6 h-full relative">
+        
+        <!-- Header -->
+        <div class="text-center mb-6 mt-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Select Your Department</h1>
+            <p class="text-gray-500 mt-2">Tap the button below to cast your vote</p>
+        </div>
+
+        <!-- Grid of Departments -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 flex-1 h-full pb-12">
+            <!-- TWDIST -->
+            <button onclick="castVote('TWDIST')" class="vote-btn flex flex-col items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-2xl shadow-lg transition-all duration-200">
+                <span class="text-3xl md:text-5xl font-bold mb-2 text-center break-words max-w-full px-2">TWDIST</span>
+                <span class="text-xs md:text-lg uppercase tracking-wider opacity-80">Tsuen Wan</span>
+            </button>
+            
+            <!-- KWTDIST -->
+            <button onclick="castVote('KWTDIST')" class="vote-btn flex flex-col items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl shadow-lg transition-all duration-200">
+                <span class="text-3xl md:text-5xl font-bold mb-2 text-center break-words max-w-full px-2">KWTDIST</span>
+                <span class="text-xs md:text-lg uppercase tracking-wider opacity-80">Kwai Tsing</span>
+            </button>
+
+            <!-- STDIST -->
+            <button onclick="castVote('STDIST')" class="vote-btn flex flex-col items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl shadow-lg transition-all duration-200">
+                <span class="text-3xl md:text-5xl font-bold mb-2 text-center break-words max-w-full px-2">STDIST</span>
+                <span class="text-xs md:text-lg uppercase tracking-wider opacity-80">Sha Tin</span>
+            </button>
+
+            <!-- APTDIST -->
+            <button onclick="castVote('APTDIST')" class="vote-btn flex flex-col items-center justify-center bg-orange-500 hover:bg-orange-600 text-white rounded-2xl shadow-lg transition-all duration-200">
+                <span class="text-3xl md:text-5xl font-bold mb-2 text-center break-words max-w-full px-2">APTDIST</span>
+                <span class="text-xs md:text-lg uppercase tracking-wider opacity-80">Airport</span>
+            </button>
+
+            <!-- LTDIST -->
+            <button onclick="castVote('LTDIST')" class="vote-btn flex flex-col items-center justify-center bg-pink-600 hover:bg-pink-700 text-white rounded-2xl shadow-lg transition-all duration-200">
+                <span class="text-3xl md:text-5xl font-bold mb-2 text-center break-words max-w-full px-2">LTDIST</span>
+                <span class="text-xs md:text-lg uppercase tracking-wider opacity-80">Lantau</span>
+            </button>
+
+            <!-- Traffic -->
+            <button onclick="castVote('Traffic')" class="vote-btn flex flex-col items-center justify-center bg-purple-600 hover:bg-purple-700 text-white rounded-2xl shadow-lg transition-all duration-200">
+                <span class="text-3xl md:text-5xl font-bold mb-2 text-center break-words max-w-full px-2">Traffic</span>
+                <span class="text-xs md:text-lg uppercase tracking-wider opacity-80">Traffic HQ</span>
+            </button>
+
+             <!-- OPS -->
+             <button onclick="castVote('OPS')" class="vote-btn flex flex-col items-center justify-center bg-red-600 hover:bg-red-700 text-white rounded-2xl shadow-lg transition-all duration-200">
+                <span class="text-3xl md:text-5xl font-bold mb-2 text-center break-words max-w-full px-2">OPS</span>
+                <span class="text-xs md:text-lg uppercase tracking-wider opacity-80">Operations</span>
+            </button>
+
+             <!-- Crime -->
+             <button onclick="castVote('Crime')" class="vote-btn flex flex-col items-center justify-center bg-cyan-600 hover:bg-cyan-700 text-white rounded-2xl shadow-lg transition-all duration-200">
+                <span class="text-3xl md:text-5xl font-bold mb-2 text-center break-words max-w-full px-2">Crime</span>
+                <span class="text-xs md:text-lg uppercase tracking-wider opacity-80">Crime Wing</span>
+            </button>
+
+             <!-- RHQ -->
+             <button onclick="castVote('RHQ')" class="vote-btn flex flex-col items-center justify-center bg-slate-600 hover:bg-slate-700 text-white rounded-2xl shadow-lg transition-all duration-200 col-span-2 md:col-span-1">
+                <span class="text-3xl md:text-5xl font-bold mb-2 text-center break-words max-w-full px-2">RHQ</span>
+                <span class="text-xs md:text-lg uppercase tracking-wider opacity-80">Regional HQ</span>
+            </button>
+        </div>
+
+        <!-- Settings Button (Bottom Right) -->
+        <button onclick="openPasswordModal()" class="absolute bottom-6 right-6 p-3 bg-gray-200 text-gray-600 rounded-full shadow-sm hover:bg-gray-300 transition-colors z-10">
+            <i data-lucide="settings" class="w-6 h-6"></i>
+        </button>
+    </div>
+
+    <!-- THANK YOU OVERLAY (Hidden by default) -->
+    <div id="thankYouOverlay" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-10 text-center max-w-sm mx-4 shadow-2xl transform scale-95 transition-transform duration-300" id="thankYouCard">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="check" class="w-10 h-10 text-green-600"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Vote Recorded!</h2>
+            <p class="text-gray-500">Thank you for participating.</p>
+        </div>
+    </div>
+
+    <!-- PASSWORD MODAL (Hidden by default) -->
+    <div id="passwordModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden backdrop-blur-sm">
+        <div class="bg-white rounded-xl p-6 w-full max-w-sm mx-4 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Admin Access</h3>
+                <button onclick="closePasswordModal()" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <p class="text-sm text-gray-500 mb-4">Enter password to view stats and reset.</p>
+            
+            <input type="password" id="adminPassword" placeholder="Password" 
+                class="w-full p-3 border border-gray-300 rounded-lg mb-4 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-center"
+                onkeypress="handleEnter(event)">
+            
+            <p id="passwordError" class="text-red-500 text-sm mb-3 hidden text-center">Incorrect Password</p>
+
+            <button onclick="checkPassword()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-blue-700">
+                Enter
+            </button>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD (Hidden by default) -->
+    <div id="adminScreen" class="fixed inset-0 bg-gray-100 z-40 hidden flex-col overflow-y-auto">
+        <!-- Admin Header -->
+        <div class="bg-white shadow-sm p-4 sticky top-0 z-10 flex justify-between items-center">
+            <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <i data-lucide="bar-chart-2" class="w-6 h-6 text-blue-600"></i>
+                Results Dashboard
+            </h2>
+            <button onclick="closeAdmin()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-300">
+                Exit
+            </button>
+        </div>
+
+        <!-- Stats Content -->
+        <div class="p-6 max-w-4xl mx-auto w-full flex-1">
+            
+            <!-- Total Votes Card -->
+            <div class="bg-white rounded-xl p-6 shadow-sm mb-6 flex justify-between items-center">
+                <div>
+                    <p class="text-gray-500 text-sm font-medium uppercase">Total Votes Cast</p>
+                    <p class="text-4xl font-bold text-gray-900" id="totalVotesDisplay">0</p>
+                </div>
+                <div class="p-3 bg-blue-50 rounded-full">
+                    <i data-lucide="users" class="w-8 h-8 text-blue-600"></i>
+                </div>
+            </div>
+
+            <!-- Dept Breakdown -->
+            <div class="bg-white rounded-xl p-6 shadow-sm mb-8">
+                <h3 class="text-lg font-semibold mb-4 border-b pb-2">Department Breakdown</h3>
+                <div id="statsContainer" class="space-y-4">
+                    <!-- Stats will be injected here via JS -->
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="bg-red-50 border border-red-100 rounded-xl p-6">
+                <h3 class="text-red-800 font-bold mb-2">Danger Zone</h3>
+                <p class="text-red-600 text-sm mb-4">This action cannot be undone. All collected voting data will be permanently erased.</p>
+                <button onclick="confirmReset()" class="w-full bg-white border border-red-300 text-red-600 font-bold py-3 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
+                    Reset All Votes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal for Reset -->
+    <div id="resetConfirmModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden backdrop-blur-sm">
+        <div class="bg-white rounded-xl p-6 w-full max-w-sm mx-4 shadow-2xl text-center">
+            <div class="mx-auto w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Are you sure?</h3>
+            <p class="text-gray-500 mb-6">This will reset counts for all departments to zero.</p>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="closeResetConfirm()" class="py-2 rounded-lg border border-gray-300 text-gray-700 font-medium">Cancel</button>
+                <button onclick="executeReset()" class="py-2 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700">Yes, Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Data Management
+        const DEPARTMENTS = ['TWDIST', 'KWTDIST', 'STDIST', 'APTDIST', 'LTDIST', 'Traffic', 'OPS', 'Crime', 'RHQ'];
+        const STORAGE_KEY = 'ipad_voting_app_data_v2';
+        
+        // Initial State
+        let votes = {};
+        DEPARTMENTS.forEach(d => votes[d] = 0);
+
+        // Load data on start
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                const storedVotes = JSON.parse(stored);
+                // Merge stored votes with current structure to ensure all keys exist
+                votes = { ...votes, ...storedVotes };
+            }
+        }
+        loadData();
+
+        // -----------------------
+        // Voting Logic
+        // -----------------------
+        function castVote(dept) {
+            // Increment
+            votes[dept]++;
+            
+            // Save
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(votes));
+
+            // Show Feedback
+            const overlay = document.getElementById('thankYouOverlay');
+            const card = document.getElementById('thankYouCard');
+            
+            overlay.classList.remove('hidden');
+            // Trigger reflow for animation
+            void overlay.offsetWidth; 
+            
+            overlay.classList.remove('opacity-0');
+            card.classList.remove('scale-95');
+            card.classList.add('scale-100');
+
+            // Hide after 2 seconds
+            setTimeout(() => {
+                overlay.classList.add('opacity-0');
+                card.classList.add('scale-95');
+                card.classList.remove('scale-100');
+                
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300); // Wait for transition to finish
+            }, 1500);
+        }
+
+        // -----------------------
+        // Admin / Password Logic
+        // -----------------------
+        function openPasswordModal() {
+            document.getElementById('passwordModal').classList.remove('hidden');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('passwordError').classList.add('hidden');
+            // Focus input (might need user interaction on iOS, but good for desktop testing)
+            setTimeout(() => document.getElementById('adminPassword').focus(), 100);
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').classList.add('hidden');
+        }
+
+        function handleEnter(e) {
+            if (e.key === 'Enter') checkPassword();
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('adminPassword').value;
+            if (input === 'abc123') {
+                closePasswordModal();
+                showAdmin();
+            } else {
+                document.getElementById('passwordError').classList.remove('hidden');
+                document.getElementById('adminPassword').classList.add('border-red-500');
+            }
+        }
+
+        // -----------------------
+        // Admin Dashboard Logic
+        // -----------------------
+        function showAdmin() {
+            renderStats();
+            const screen = document.getElementById('adminScreen');
+            screen.classList.remove('hidden');
+            screen.classList.add('fade-in');
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminScreen').classList.add('hidden');
+        }
+
+        function renderStats() {
+            const container = document.getElementById('statsContainer');
+            const totalDisplay = document.getElementById('totalVotesDisplay');
+            
+            container.innerHTML = '';
+            
+            // Calculate total
+            const total = Object.values(votes).reduce((a, b) => a + b, 0);
+            totalDisplay.innerText = total;
+
+            const colors = {
+                'TWDIST': 'bg-blue-600',
+                'KWTDIST': 'bg-indigo-600',
+                'STDIST': 'bg-emerald-600',
+                'APTDIST': 'bg-orange-500',
+                'LTDIST': 'bg-pink-600',
+                'Traffic': 'bg-purple-600',
+                'OPS': 'bg-red-600',
+                'Crime': 'bg-cyan-600',
+                'RHQ': 'bg-slate-600'
+            };
+
+            DEPARTMENTS.forEach(dept => {
+                const count = votes[dept] || 0;
+                const percentage = total === 0 ? 0 : Math.round((count / total) * 100);
+                const colorClass = colors[dept] || 'bg-gray-500';
+
+                const html = `
+                    <div class="flex flex-col mb-2">
+                        <div class="flex justify-between items-end mb-1">
+                            <span class="font-bold text-gray-700">${dept}</span>
+                            <span class="text-sm text-gray-600 font-mono">${count} votes (${percentage}%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                            <div class="${colorClass} h-4 rounded-full transition-all duration-500" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // -----------------------
+        // Reset Logic
+        // -----------------------
+        function confirmReset() {
+            document.getElementById('resetConfirmModal').classList.remove('hidden');
+        }
+
+        function closeResetConfirm() {
+            document.getElementById('resetConfirmModal').classList.add('hidden');
+        }
+
+        function executeReset() {
+            // Reset Data
+            votes = {};
+            DEPARTMENTS.forEach(d => votes[d] = 0);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(votes));
+            
+            // Update UI
+            renderStats();
+            closeResetConfirm();
+            
+            // Optional: Feedback toast in admin
+            // We'll just rely on the stats turning to zero as feedback
+        }
+
+    </script>
+</body>
+</html>
