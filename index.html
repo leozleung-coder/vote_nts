@@ -109,6 +109,11 @@
                      <button onclick="window.handleSelection('RHQ')" class="vote-btn flex flex-col items-center justify-center bg-[#CEADDE] hover:bg-[#B99BC8] text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">RHQ</span>
                     </button>
+
+                    <!-- New Non-NTS Formation -->
+                    <button onclick="window.handleSelection('Non-NTS')" class="vote-btn flex flex-col items-center justify-center bg-neutral-600 hover:bg-neutral-700 text-white rounded-xl shadow-md transition-all duration-200 col-span-3">
+                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">Non-NTS</span>
+                    </button>
                 </div>
             </div>
 
@@ -354,7 +359,8 @@
         lucide.createIcons();
 
         // Data Management
-        const POLICE_FORMATIONS = ['TWDIST', 'KWTDIST', 'STDIST', 'APTDIST', 'LTDIST', 'Traffic', 'OPS', 'Crime', 'RHQ'];
+        // ADDED 'Non-NTS' to POLICE_FORMATIONS
+        const POLICE_FORMATIONS = ['TWDIST', 'KWTDIST', 'STDIST', 'APTDIST', 'LTDIST', 'Traffic', 'OPS', 'Crime', 'RHQ', 'Non-NTS'];
         const OTHER_DEPARTMENTS = ['FSD', 'C&E', 'IMMD', 'GFS', 'Others'];
         const DEPARTMENTS = [...POLICE_FORMATIONS, ...OTHER_DEPARTMENTS];
         
@@ -369,6 +375,7 @@
             'OPS': 'bg-red-600',
             'Crime': 'bg-cyan-600',
             'RHQ': 'bg-[#CEADDE]',
+            'Non-NTS': 'bg-neutral-600', // New Color
             'FSD': 'bg-rose-600',
             'C&E': 'bg-[#B2D631]',
             'IMMD': 'bg-yellow-600',
