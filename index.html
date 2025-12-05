@@ -59,7 +59,6 @@
 <body class="bg-gray-50 text-gray-800 font-sans h-screen w-screen overflow-hidden flex flex-col">
 
     <!-- MAIN VOTING SCREEN -->
-    <!-- CHANGED: overflow-y-auto to overflow-hidden, added flex/flex-col to fill height -->
     <div id="votingScreen" class="flex-1 flex flex-col p-3 md:p-4 h-full relative overflow-hidden">
         
         <!-- Header -->
@@ -67,87 +66,74 @@
             <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Select Your Police Formation/Department</h1>
         </div>
 
-        <!-- Content Container - Fills remaining height -->
+        <!-- Content Container -->
         <div class="flex-1 flex flex-col gap-2 min-h-0 pb-12">
             
-            <!-- Formations Section (Larger Share) -->
+            <!-- Formations Section -->
             <div class="flex flex-col flex-[3] gap-1 min-h-0">
                 <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wide border-b border-gray-200 pb-1 shrink-0">Formations</h2>
-                <!-- Grid fills available height -->
+                <!-- Only trigger handleSelection for these to open sub-modal -->
                 <div class="grid grid-cols-3 gap-2 flex-1 min-h-0">
-                    <!-- TWDIST (Blue) -->
-                    <button onclick="window.castVote('TWDIST')" class="vote-btn flex flex-col items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md transition-all duration-200">
+                    <button onclick="window.handleSelection('TWDIST')" class="vote-btn flex flex-col items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">TWDIST</span>
                     </button>
                     
-                    <!-- KWTDIST (Indigo) -->
-                    <button onclick="window.castVote('KWTDIST')" class="vote-btn flex flex-col items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-md transition-all duration-200">
+                    <button onclick="window.handleSelection('KWTDIST')" class="vote-btn flex flex-col items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">KWTDIST</span>
                     </button>
 
-                    <!-- STDIST (Emerald) -->
-                    <button onclick="window.castVote('STDIST')" class="vote-btn flex flex-col items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-md transition-all duration-200">
+                    <button onclick="window.handleSelection('STDIST')" class="vote-btn flex flex-col items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">STDIST</span>
                     </button>
 
-                    <!-- APTDIST (Orange) -->
-                    <button onclick="window.castVote('APTDIST')" class="vote-btn flex flex-col items-center justify-center bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-md transition-all duration-200">
+                    <button onclick="window.handleSelection('APTDIST')" class="vote-btn flex flex-col items-center justify-center bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">APTDIST</span>
                     </button>
 
-                    <!-- LTDIST (Pink) -->
-                    <button onclick="window.castVote('LTDIST')" class="vote-btn flex flex-col items-center justify-center bg-pink-600 hover:bg-pink-700 text-white rounded-xl shadow-md transition-all duration-200">
+                    <button onclick="window.handleSelection('LTDIST')" class="vote-btn flex flex-col items-center justify-center bg-pink-600 hover:bg-pink-700 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">LTDIST</span>
                     </button>
 
-                    <!-- Traffic (Purple) -->
-                    <button onclick="window.castVote('Traffic')" class="vote-btn flex flex-col items-center justify-center bg-purple-600 hover:bg-purple-700 text-white rounded-xl shadow-md transition-all duration-200">
+                    <button onclick="window.handleSelection('Traffic')" class="vote-btn flex flex-col items-center justify-center bg-purple-600 hover:bg-purple-700 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">Traffic</span>
                     </button>
 
-                     <!-- OPS (Red) -->
-                     <button onclick="window.castVote('OPS')" class="vote-btn flex flex-col items-center justify-center bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-md transition-all duration-200">
+                     <button onclick="window.handleSelection('OPS')" class="vote-btn flex flex-col items-center justify-center bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">OPS</span>
                     </button>
 
-                     <!-- Crime (Cyan) -->
-                     <button onclick="window.castVote('Crime')" class="vote-btn flex flex-col items-center justify-center bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl shadow-md transition-all duration-200">
+                     <button onclick="window.handleSelection('Crime')" class="vote-btn flex flex-col items-center justify-center bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">Crime</span>
                     </button>
 
-                     <!-- RHQ (Custom Lilac #CEADDE) -->
-                     <button onclick="window.castVote('RHQ')" class="vote-btn flex flex-col items-center justify-center bg-[#CEADDE] hover:bg-[#B99BC8] text-white rounded-xl shadow-md transition-all duration-200">
+                     <button onclick="window.handleSelection('RHQ')" class="vote-btn flex flex-col items-center justify-center bg-[#CEADDE] hover:bg-[#B99BC8] text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">RHQ</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Departments Section (Smaller Share) -->
+            <!-- Departments Section -->
             <div class="flex flex-col flex-[2] gap-1 min-h-0">
                 <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wide border-b border-gray-200 pb-1 shrink-0">Departments</h2>
+                <!-- Direct voting for these -->
                 <div class="grid grid-cols-3 gap-2 flex-1 min-h-0">
-                    <!-- FSD (Rose) -->
-                    <button onclick="window.castVote('FSD')" class="vote-btn flex flex-col items-center justify-center bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-md transition-all duration-200">
+                    <button onclick="window.handleSelection('FSD')" class="vote-btn flex flex-col items-center justify-center bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">FSD</span>
                     </button>
 
-                    <!-- C&E (Lime - Custom #B2D631) -->
-                    <button onclick="window.castVote('C&E')" class="vote-btn flex flex-col items-center justify-center bg-[#B2D631] hover:bg-[#9EBE2B] text-white rounded-xl shadow-md transition-all duration-200">
+                    <button onclick="window.handleSelection('C&E')" class="vote-btn flex flex-col items-center justify-center bg-[#B2D631] hover:bg-[#9EBE2B] text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">C&E</span>
                     </button>
 
-                    <!-- IMMD (Yellow/Amber - Distinct from Orange) -->
-                    <button onclick="window.castVote('IMMD')" class="vote-btn flex flex-col items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl shadow-md transition-all duration-200">
+                    <button onclick="window.handleSelection('IMMD')" class="vote-btn flex flex-col items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">IMMD</span>
                     </button>
 
-                    <!-- GFS (Sky) -->
-                    <button onclick="window.castVote('GFS')" class="vote-btn flex flex-col items-center justify-center bg-sky-500 hover:bg-sky-600 text-white rounded-xl shadow-md transition-all duration-200">
+                    <button onclick="window.handleSelection('GFS')" class="vote-btn flex flex-col items-center justify-center bg-sky-500 hover:bg-sky-600 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">GFS</span>
                     </button>
 
-                    <!-- Others (Stone/Brown) -->
-                    <button onclick="window.castVote('Others')" class="vote-btn flex flex-col items-center justify-center bg-stone-500 hover:bg-stone-600 text-white rounded-xl shadow-md transition-all duration-200 col-span-2">
+                    <button onclick="window.handleSelection('Others')" class="vote-btn flex flex-col items-center justify-center bg-stone-500 hover:bg-stone-600 text-white rounded-xl shadow-md transition-all duration-200 col-span-2">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">Others</span>
                     </button>
                 </div>
@@ -165,8 +151,34 @@
         </div>
     </div>
 
+    <!-- SUB-SELECTION MODAL -->
+    <div id="subSelectionModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center hidden backdrop-blur-md">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl transform transition-all">
+            <div class="text-center mb-6">
+                <h3 class="text-xl font-bold text-gray-500 uppercase tracking-wide mb-1">Select Role for</h3>
+                <h2 id="subSelectionTitle" class="text-3xl font-extrabold text-blue-600">FORMATION</h2>
+            </div>
+            
+            <div class="space-y-3">
+                <button onclick="window.confirmSubChoice('Regular')" class="w-full bg-blue-600 text-white py-4 rounded-xl text-2xl font-bold shadow-md hover:bg-blue-700 active:scale-95 transition-all flex items-center justify-center gap-3">
+                    <i data-lucide="shield" class="w-6 h-6"></i> Regular
+                </button>
+                <button onclick="window.confirmSubChoice('Auxiliary')" class="w-full bg-indigo-500 text-white py-4 rounded-xl text-2xl font-bold shadow-md hover:bg-indigo-600 active:scale-95 transition-all flex items-center justify-center gap-3">
+                    <i data-lucide="users" class="w-6 h-6"></i> Auxiliary
+                </button>
+                <button onclick="window.confirmSubChoice('Civilian')" class="w-full bg-teal-500 text-white py-4 rounded-xl text-2xl font-bold shadow-md hover:bg-teal-600 active:scale-95 transition-all flex items-center justify-center gap-3">
+                    <i data-lucide="user" class="w-6 h-6"></i> Civilian
+                </button>
+            </div>
+
+            <button onclick="window.closeSubSelectionModal()" class="mt-6 w-full py-3 text-gray-500 font-semibold hover:bg-gray-100 rounded-lg transition-colors">
+                Cancel
+            </button>
+        </div>
+    </div>
+
     <!-- THANK YOU OVERLAY -->
-    <div id="thankYouOverlay" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div id="thankYouOverlay" class="fixed inset-0 bg-black/80 z-[60] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl p-10 text-center max-w-sm mx-4 shadow-2xl transform scale-95 transition-transform duration-300" id="thankYouCard">
             <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
                 <i data-lucide="check" class="w-10 h-10 text-green-600"></i>
@@ -178,7 +190,6 @@
     <div id="passwordModal" class="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center hidden backdrop-blur-sm">
         <div class="bg-white rounded-xl p-6 w-full max-w-sm mx-4 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
-                <!-- ID added for dynamic title -->
                 <h3 id="passwordModalTitle" class="text-xl font-bold">Admin Access</h3>
                 <button onclick="window.closePasswordModal()" class="text-gray-400 hover:text-gray-600">
                     <i data-lucide="x" class="w-6 h-6"></i>
@@ -321,7 +332,6 @@
             <p class="text-gray-500 mb-6">This will reset ALL formation counts and hourly logs.</p>
             <div class="grid grid-cols-2 gap-3">
                 <button onclick="window.closeResetConfirm()" class="py-2 rounded-lg border border-gray-300 text-gray-700 font-medium">Cancel</button>
-                <!-- CHANGED: Now initiates the password flow instead of executing reset directly -->
                 <button onclick="window.initiateResetFlow()" class="py-2 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700">Yes, Reset</button>
             </div>
         </div>
@@ -337,10 +347,9 @@
         lucide.createIcons();
 
         // Data Management
-        const DEPARTMENTS = [
-            'TWDIST', 'KWTDIST', 'STDIST', 'APTDIST', 'LTDIST', 'Traffic', 'OPS', 'Crime', 'RHQ',
-            'FSD', 'C&E', 'IMMD', 'GFS', 'Others'
-        ];
+        const POLICE_FORMATIONS = ['TWDIST', 'KWTDIST', 'STDIST', 'APTDIST', 'LTDIST', 'Traffic', 'OPS', 'Crime', 'RHQ'];
+        const OTHER_DEPARTMENTS = ['FSD', 'C&E', 'IMMD', 'GFS', 'Others'];
+        const DEPARTMENTS = [...POLICE_FORMATIONS, ...OTHER_DEPARTMENTS];
         
         // Distinct Colors Map
         const COLOR_MAP = {
@@ -361,7 +370,6 @@
         };
 
         // --- FIREBASE CONFIG & SETUP ---
-        // Provided by User
         const firebaseConfig = {
             apiKey: "AIzaSyBSw2oLLWkShOmp6TaTEqhH38tib4PFLdo",
             authDomain: "vote-nts.firebaseapp.com",
@@ -377,17 +385,21 @@
 
         let appData = {
             deptCounts: {},
-            hourlyCounts: {} 
+            hourlyCounts: {},
+            subCounts: {}, 
+            hourlySubCounts: {} // New: Tracks role breakdown per hour
         };
         
         let currentUser = null;
+        let pendingFormation = null;
 
-        // Init empty structures locally first
+        // Init empty structures
         function initEmptyData() {
-            const data = { deptCounts: {}, hourlyCounts: {} };
+            const data = { deptCounts: {}, hourlyCounts: {}, subCounts: {}, hourlySubCounts: {} };
             DEPARTMENTS.forEach(d => data.deptCounts[d] = 0);
             for(let i=0; i<24; i++) {
                 data.hourlyCounts[i] = {};
+                data.hourlySubCounts[i] = {}; // Init hourly sub container
                 DEPARTMENTS.forEach(d => data.hourlyCounts[i][d] = 0);
             }
             return data;
@@ -416,19 +428,15 @@
             }
         });
 
-        // --- FIRESTORE LISTENERS ---
         function subscribeToData() {
             if (!currentUser) return;
-            
-            // Simplified Path for Personal Projects
             const summaryDocRef = doc(db, 'voting_app', 'stats');
 
             onSnapshot(summaryDocRef, (docSnap) => {
                 if (docSnap.exists()) {
-                    console.log("Data Received");
                     const data = docSnap.data();
-                    // Merge logic
                     if (data.deptCounts) appData.deptCounts = { ...appData.deptCounts, ...data.deptCounts };
+                    if (data.subCounts) appData.subCounts = { ...appData.subCounts, ...data.subCounts };
                     if (data.hourlyCounts) {
                         for(let i=0; i<24; i++) {
                             if (data.hourlyCounts[i]) {
@@ -436,18 +444,24 @@
                             }
                         }
                     }
-                    
-                    // Update UI if Admin is open
+                    // Merge Hourly Sub Counts
+                    if (data.hourlySubCounts) {
+                        for(let i=0; i<24; i++) {
+                            if (data.hourlySubCounts[i]) {
+                                if (!appData.hourlySubCounts[i]) appData.hourlySubCounts[i] = {};
+                                appData.hourlySubCounts[i] = { ...appData.hourlySubCounts[i], ...data.hourlySubCounts[i] };
+                            }
+                        }
+                    }
+
                     if (!document.getElementById('adminScreen').classList.contains('hidden')) {
                         window.renderStats();
                     }
                 } else {
-                    console.log("No data found, initializing...");
-                    // Initialize if not exists (first run)
-                    setDoc(summaryDocRef, appData).catch(err => console.error("Init Data Failed (Check Rules):", err));
+                    setDoc(summaryDocRef, appData).catch(err => console.error("Init Data Failed:", err));
                 }
             }, (error) => {
-                console.error("Data Listen Error (Check Firestore Rules):", error);
+                console.error("Data Listen Error:", error);
             });
         }
 
@@ -465,14 +479,55 @@
             }
         };
 
-        window.castVote = async function(dept) {
+        window.handleSelection = function(dept) {
+            if (POLICE_FORMATIONS.includes(dept)) {
+                pendingFormation = dept;
+                document.getElementById('subSelectionTitle').innerText = dept;
+                document.getElementById('subSelectionModal').classList.remove('hidden');
+            } else {
+                window.processVote(dept, null);
+            }
+        };
+
+        window.confirmSubChoice = function(role) {
+            if (pendingFormation) {
+                window.processVote(pendingFormation, role);
+                window.closeSubSelectionModal();
+            }
+        };
+
+        window.closeSubSelectionModal = function() {
+            document.getElementById('subSelectionModal').classList.add('hidden');
+            pendingFormation = null;
+        };
+
+        // 3. Core Vote Logic
+        window.processVote = async function(dept, role) {
             // Optimistic Update
             appData.deptCounts[dept]++;
+            
+            // Update Sub Count (Total)
+            if (role) {
+                const subKey = `${dept}_${role}`;
+                appData.subCounts[subKey] = (appData.subCounts[subKey] || 0) + 1;
+            }
+
             const currentHour = new Date().getHours();
+            
+            // Update Hourly Count
             if (!appData.hourlyCounts[currentHour]) appData.hourlyCounts[currentHour] = {};
             appData.hourlyCounts[currentHour][dept] = (appData.hourlyCounts[currentHour][dept] || 0) + 1;
 
-            // Show Feedback immediately
+            // Update Hourly Sub Count (New)
+            if (!appData.hourlySubCounts) appData.hourlySubCounts = {};
+            if (!appData.hourlySubCounts[currentHour]) appData.hourlySubCounts[currentHour] = {};
+            
+            if (role) {
+                const subKey = `${dept}_${role}`;
+                appData.hourlySubCounts[currentHour][subKey] = (appData.hourlySubCounts[currentHour][subKey] || 0) + 1;
+            }
+
+            // Show Feedback
             const overlay = document.getElementById('thankYouOverlay');
             const card = document.getElementById('thankYouCard');
             overlay.classList.remove('hidden');
@@ -494,27 +549,28 @@
                 try {
                     await setDoc(summaryDocRef, appData);
                 } catch (e) {
-                    console.error("Save failed (Check Firestore Rules):", e);
+                    console.error("Save failed:", e);
                 }
             }
         };
+        // Kept for backwards compatibility if needed
+        window.castVote = function(dept) { window.handleSelection(dept); };
+
 
         // --- Admin / Password Logic ---
         let inputBuffer = "";
-        let currentPasswordMode = 'ADMIN'; // 'ADMIN' or 'RESET'
+        let currentPasswordMode = 'ADMIN'; 
         const ADMIN_PASS = "112233";
         const RESET_PASS = "332211";
 
         window.openPasswordModal = function(mode = 'ADMIN') {
             currentPasswordMode = mode;
-            // Update Title
             const titleEl = document.getElementById('passwordModalTitle');
             if (mode === 'ADMIN') {
                 titleEl.textContent = "Admin Access";
             } else {
                 titleEl.textContent = "Confirm Reset";
             }
-
             document.getElementById('passwordModal').classList.remove('hidden');
             document.getElementById('passwordError').classList.add('hidden');
             inputBuffer = "";
@@ -550,7 +606,6 @@
 
         window.checkPassword = function() {
             const targetPass = currentPasswordMode === 'ADMIN' ? ADMIN_PASS : RESET_PASS;
-            
             if (inputBuffer === targetPass) {
                 window.closePasswordModal();
                 if (currentPasswordMode === 'ADMIN') {
@@ -574,25 +629,18 @@
             document.getElementById('resetConfirmModal').classList.add('hidden');
         };
 
-        // NEW: Initiates password flow for reset
         window.initiateResetFlow = function() {
             window.closeResetConfirm();
-            // Open password modal in RESET mode
             window.openPasswordModal('RESET'); 
         };
 
         window.executeReset = async function() {
-            // Reset Data Object
             appData = initEmptyData();
-
-            // Save empty data to Firestore
             if (currentUser) {
                 const summaryDocRef = doc(db, 'voting_app', 'stats');
                 await setDoc(summaryDocRef, appData);
             }
-
             window.renderStats();
-            // Modal closed by checkPassword
         };
 
         // --- Admin Dashboard Logic ---
@@ -615,7 +663,6 @@
             currentTab = tab;
             const btnDept = document.getElementById('tab-dept');
             const btnHour = document.getElementById('tab-hour');
-            
             const activeClass = "bg-white text-gray-800 shadow-sm";
             const inactiveClass = "text-gray-500 hover:text-gray-700";
 
@@ -655,6 +702,21 @@
                 const percentage = total === 0 ? 0 : Math.round((count / total) * 100);
                 const colorClass = COLOR_MAP[dept] || 'bg-gray-500';
                 
+                // Get sub-counts if applicable
+                let subStats = '';
+                if (POLICE_FORMATIONS.includes(dept)) {
+                    const r = appData.subCounts[`${dept}_Regular`] || 0;
+                    const a = appData.subCounts[`${dept}_Auxiliary`] || 0;
+                    const c = appData.subCounts[`${dept}_Civilian`] || 0;
+                    subStats = `
+                        <div class="flex justify-between text-[8px] text-gray-500 mt-1 px-1 border-t border-gray-100 pt-1">
+                            <span>R:${r}</span>
+                            <span>A:${a}</span>
+                            <span>C:${c}</span>
+                        </div>
+                    `;
+                }
+
                 const html = `
                     <div class="bg-gray-50 rounded-lg p-1.5 md:p-2 flex flex-col justify-between h-full border border-gray-100 relative min-h-0">
                          <div class="flex flex-col justify-center h-full">
@@ -663,13 +725,14 @@
                                 <span class="block text-lg md:text-2xl font-bold text-gray-800 leading-none">${count}</span>
                             </div>
                             
-                            <div class="mt-1 md:mt-2">
+                            <div class="mt-1">
                                 <div class="flex justify-between text-[10px] text-gray-400 mb-0.5">
                                     <span>${percentage}%</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-1 md:h-1.5 overflow-hidden">
                                     <div class="${colorClass} h-full rounded-full transition-all duration-500" style="width: ${percentage}%"></div>
                                 </div>
+                                ${subStats}
                             </div>
                          </div>
                     </div>
@@ -754,6 +817,8 @@
             title.innerText = `${start} - ${end}`;
             
             const data = appData.hourlyCounts[hour] || {};
+            const subData = (appData.hourlySubCounts && appData.hourlySubCounts[hour]) ? appData.hourlySubCounts[hour] : {};
+
             let total = 0;
             const sortedDepts = DEPARTMENTS.map(d => {
                 const count = data[d] || 0;
@@ -770,16 +835,40 @@
                 sortedDepts.forEach(item => {
                     if (item.count > 0) {
                         const percent = Math.round((item.count / total) * 100);
+                        
+                        // Generate Hourly Sub Stats HTML
+                        let subStatsHtml = '';
+                        if (POLICE_FORMATIONS.includes(item.name)) {
+                            const r = subData[`${item.name}_Regular`] || 0;
+                            const a = subData[`${item.name}_Auxiliary`] || 0;
+                            const c = subData[`${item.name}_Civilian`] || 0;
+                            
+                            if (r + a + c > 0) {
+                                subStatsHtml = `
+                                    <div class="flex gap-2 text-[10px] text-gray-500 mt-1 ml-6">
+                                        <span class="${r>0?'font-bold text-gray-700':''}">R: ${r}</span>
+                                        <span class="text-gray-300">|</span>
+                                        <span class="${a>0?'font-bold text-gray-700':''}">A: ${a}</span>
+                                        <span class="text-gray-300">|</span>
+                                        <span class="${c>0?'font-bold text-gray-700':''}">C: ${c}</span>
+                                    </div>
+                                `;
+                            }
+                        }
+
                         list.innerHTML += `
-                            <div class="flex justify-between items-center p-2 rounded hover:bg-gray-50 border-b border-gray-50 last:border-0">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full ${item.color} shadow-sm"></div>
-                                    <span class="font-medium text-gray-700">${item.name}</span>
+                            <div class="p-2 rounded hover:bg-gray-50 border-b border-gray-50 last:border-0">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-3 h-3 rounded-full ${item.color} shadow-sm"></div>
+                                        <span class="font-medium text-gray-700">${item.name}</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="font-bold text-gray-900">${item.count}</span>
+                                        <span class="text-xs text-gray-400 ml-1">(${percent}%)</span>
+                                    </div>
                                 </div>
-                                <div class="text-right">
-                                    <span class="font-bold text-gray-900">${item.count}</span>
-                                    <span class="text-xs text-gray-400 ml-1">(${percent}%)</span>
-                                </div>
+                                ${subStatsHtml}
                             </div>
                         `;
                     }
@@ -802,19 +891,18 @@
             document.getElementById('resetConfirmModal').classList.add('hidden');
         };
 
-        window.executeReset = async function() {
-            // Reset Data Object
-            appData = initEmptyData();
+        window.initiateResetFlow = function() {
+            window.closeResetConfirm();
+            window.openPasswordModal('RESET'); 
+        };
 
-            // Save empty data to Firestore
+        window.executeReset = async function() {
+            appData = initEmptyData();
             if (currentUser) {
-                // Correct Path: .../voting_summary/stats
                 const summaryDocRef = doc(db, 'voting_app', 'stats');
                 await setDoc(summaryDocRef, appData);
             }
-
             window.renderStats();
-            window.closeResetConfirm();
         };
     </script>
 </body>
