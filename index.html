@@ -13,8 +13,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- (Removed global Lucide script to prevent conflicts, using ESM import below) -->
 
     <style>
         /* Kiosk Mode Tweaks */
@@ -69,7 +68,7 @@
         <!-- Content Container -->
         <div class="flex-1 flex flex-col gap-2 min-h-0 pb-12">
             
-            <!-- Formations Section (Increased flex ratio to 3) -->
+            <!-- Formations Section -->
             <div class="flex flex-col flex-[3] gap-1 min-h-0">
                 <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wide border-b border-gray-200 pb-1 shrink-0">Formations</h2>
                 <!-- Only trigger handleSelection for these to open sub-modal -->
@@ -117,7 +116,7 @@
                 </div>
             </div>
 
-            <!-- Departments Section (Decreased flex ratio to 1) -->
+            <!-- Departments Section -->
             <div class="flex flex-col flex-[1] gap-1 min-h-0">
                 <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wide border-b border-gray-200 pb-1 shrink-0">Departments</h2>
                 <!-- Changed to 2 columns for better fit -->
@@ -228,29 +227,6 @@
         </div>
     </div>
 
-    <!-- HOURLY DETAIL MODAL -->
-    <div id="hourDetailModal" class="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center hidden backdrop-blur-sm">
-        <div class="bg-white rounded-xl p-6 w-full max-w-sm mx-4 shadow-2xl flex flex-col max-h-[80vh]">
-            <div class="flex justify-between items-center mb-4 border-b pb-2 shrink-0">
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800" id="hourDetailTitle">Hour 12</h3>
-                    <p class="text-sm text-gray-500">Total: <span id="hourDetailTotal" class="font-bold">0</span></p>
-                </div>
-                <button onclick="window.closeHourDetailModal()" class="text-gray-400 hover:text-gray-600">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
-            </div>
-            
-            <div id="hourDetailList" class="overflow-y-auto flex-1 space-y-2 no-scrollbar">
-                <!-- Details injected here -->
-            </div>
-            
-            <button onclick="window.closeHourDetailModal()" class="mt-4 w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-200 shrink-0">
-                Close
-            </button>
-        </div>
-    </div>
-
     <!-- ADMIN DASHBOARD -->
     <div id="adminScreen" class="fixed inset-0 bg-gray-100 z-40 hidden flex-col h-screen w-screen overflow-hidden">
         <!-- Admin Header -->
@@ -277,7 +253,7 @@
                         <p class="text-gray-500 text-xs font-bold uppercase tracking-wider">Total Votes</p>
                         <div class="flex items-baseline gap-3">
                             <p class="text-2xl md:text-3xl font-bold text-gray-900" id="totalVotesDisplay">0</p>
-                            <!-- NEW: Breakdown Container -->
+                            <!-- Breakdown Container -->
                             <div id="totalVotesBreakdown" class="flex gap-2 text-[10px] md:text-xs text-gray-500 font-medium">
                                 <!-- JS will inject R: 0 | A: 0 | C: 0 here -->
                             </div>
@@ -303,7 +279,6 @@
             <div class="bg-white rounded-xl p-3 md:p-4 shadow-sm flex-1 min-h-0 flex flex-col overflow-hidden relative">
                 
                 <!-- DEPT VIEW (Grid) -->
-                <!-- RESTORED: overflow-y-auto to ensure all 14 items are visible on all screen sizes -->
                 <div id="deptView" class="grid grid-cols-4 md:grid-cols-5 gap-2 flex-1 h-full overflow-y-auto no-scrollbar content-start">
                     <!-- JS Injected Cards -->
                     <div class="col-span-4 md:col-span-5 flex items-center justify-center text-gray-400">Loading data...</div>
@@ -346,20 +321,19 @@
     </div>
 
     <script type="module">
-        // Firebase Imports - Using a stable v10 version for compatibility
+        // Firebase Imports
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
         import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
         import { getFirestore, doc, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
-
-        // Initialize Icons
-        lucide.createIcons();
+        
+        // Import Lucide Icons directly
+        import { createIcons, icons } from 'https://esm.sh/lucide@0.469.0';
 
         // Data Management
         const POLICE_FORMATIONS = ['TWDIST', 'KWTDIST', 'STDIST', 'APTDIST', 'LTDIST', 'Traffic', 'OPS', 'Crime', 'RHQ', 'Non-NTS'];
         const OTHER_DEPARTMENTS = ['FSD', 'C&E', 'GFS', 'Others'];
         const DEPARTMENTS = [...POLICE_FORMATIONS, ...OTHER_DEPARTMENTS];
         
-        // Distinct Colors Map
         const COLOR_MAP = {
             'TWDIST': 'bg-blue-600',
             'KWTDIST': 'bg-indigo-600',
@@ -373,7 +347,7 @@
             'Non-NTS': 'bg-neutral-600',
             'FSD': 'bg-rose-600',
             'C&E': 'bg-[#B2D631]',
-            'IMMD': 'bg-yellow-600', // Removed from list but kept color just in case
+            'IMMD': 'bg-yellow-600', 
             'GFS': 'bg-sky-500',
             'Others': 'bg-stone-500'
         };
@@ -509,7 +483,6 @@
             pendingFormation = null;
         };
 
-        // 3. Core Vote Logic
         window.processVote = async function(dept, role) {
             console.log("Processing vote for:", dept, "Role:", role);
             
@@ -556,7 +529,6 @@
                 setTimeout(() => { overlay.classList.add('hidden'); }, 300);
             }, 1500);
 
-            // Sync to Firebase
             if (currentUser) {
                 const summaryDocRef = doc(db, 'voting_app', 'stats');
                 try {
@@ -698,7 +670,6 @@
             const total = Object.values(appData.deptCounts).reduce((a, b) => a + b, 0);
             document.getElementById('totalVotesDisplay').innerText = total;
 
-            // NEW: Calculate Total R/A/C Breakdown
             let r = 0, a = 0, c = 0;
             if (appData.subCounts) {
                 Object.keys(appData.subCounts).forEach(k => {
@@ -708,13 +679,9 @@
                 });
             }
 
-            // Calculate votes for Non-Police Departments (D)
             const deptVotes = OTHER_DEPARTMENTS.reduce((sum, d) => sum + (appData.deptCounts[d] || 0), 0);
-
-            // Calculate Uncategorized (Legacy data from before role selection was added)
             const uncategorized = total - (r + a + c + deptVotes);
 
-            // Render Breakdown
             let breakdownHtml = `
                 <div class="flex items-center gap-1.5 bg-gray-100 px-2 py-1 rounded-md overflow-x-auto no-scrollbar">
                     <span title="Regular" class="text-blue-700 font-bold whitespace-nowrap">R: ${r}</span>
@@ -736,6 +703,9 @@
             breakdownHtml += `</div>`;
             document.getElementById('totalVotesBreakdown').innerHTML = breakdownHtml;
 
+            // Re-initialize icons here because new HTML was injected
+            createIcons({ icons });
+
             if (currentTab === 'dept') {
                 window.renderDeptGrid(total);
             } else {
@@ -752,7 +722,6 @@
                 const percentage = total === 0 ? 0 : Math.round((count / total) * 100);
                 const colorClass = COLOR_MAP[dept] || 'bg-gray-500';
                 
-                // Get sub-counts if applicable
                 let subStats = '';
                 if (POLICE_FORMATIONS.includes(dept)) {
                     const r = appData.subCounts[`${dept}_Regular`] || 0;
@@ -886,7 +855,6 @@
                     if (item.count > 0) {
                         const percent = Math.round((item.count / total) * 100);
                         
-                        // Generate Hourly Sub Stats HTML
                         let subStatsHtml = '';
                         if (POLICE_FORMATIONS.includes(item.name)) {
                             const r = subData[`${item.name}_Regular`] || 0;
@@ -927,6 +895,9 @@
             
             modal.classList.remove('hidden');
             modal.classList.add('fade-in');
+            
+            // Re-init icons inside modal
+            createIcons({ icons });
         };
 
         window.closeHourDetailModal = function() {
@@ -954,6 +925,10 @@
             }
             window.renderStats();
         };
+        
+        // Initialize static icons on load
+        createIcons({ icons });
+        
     </script>
 </body>
 </html>
