@@ -13,8 +13,6 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- (Removed global Lucide script to prevent conflicts, using ESM import below) -->
-
     <style>
         /* Kiosk Mode Tweaks */
         body {
@@ -227,6 +225,29 @@
         </div>
     </div>
 
+    <!-- HOURLY DETAIL MODAL -->
+    <div id="hourDetailModal" class="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center hidden backdrop-blur-sm">
+        <div class="bg-white rounded-xl p-6 w-full max-w-sm mx-4 shadow-2xl flex flex-col max-h-[80vh]">
+            <div class="flex justify-between items-center mb-4 border-b pb-2 shrink-0">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800" id="hourDetailTitle">Hour 12</h3>
+                    <p class="text-sm text-gray-500">Total: <span id="hourDetailTotal" class="font-bold">0</span></p>
+                </div>
+                <button onclick="window.closeHourDetailModal()" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <div id="hourDetailList" class="overflow-y-auto flex-1 space-y-2 no-scrollbar">
+                <!-- Details injected here -->
+            </div>
+            
+            <button onclick="window.closeHourDetailModal()" class="mt-4 w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-200 shrink-0">
+                Close
+            </button>
+        </div>
+    </div>
+
     <!-- ADMIN DASHBOARD -->
     <div id="adminScreen" class="fixed inset-0 bg-gray-100 z-40 hidden flex-col h-screen w-screen overflow-hidden">
         <!-- Admin Header -->
@@ -324,7 +345,7 @@
         // Firebase Imports
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
         import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
-        import { getFirestore, doc, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+        import { getFirestore, doc, onSnapshot, setDoc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
         
         // Import Lucide Icons directly
         import { createIcons, icons } from 'https://esm.sh/lucide@0.469.0';
@@ -347,7 +368,6 @@
             'Non-NTS': 'bg-neutral-600',
             'FSD': 'bg-rose-600',
             'C&E': 'bg-[#B2D631]',
-            'IMMD': 'bg-yellow-600', 
             'GFS': 'bg-sky-500',
             'Others': 'bg-stone-500'
         };
@@ -486,34 +506,9 @@
         window.processVote = async function(dept, role) {
             console.log("Processing vote for:", dept, "Role:", role);
             
-            // Safety checks
-            if (!appData.deptCounts) appData.deptCounts = {};
-            if (typeof appData.deptCounts[dept] === 'undefined') appData.deptCounts[dept] = 0;
-            if (!appData.subCounts) appData.subCounts = {};
-            if (!appData.hourlyCounts) appData.hourlyCounts = {};
-            if (!appData.hourlySubCounts) appData.hourlySubCounts = {};
-
-            // Optimistic Update
-            appData.deptCounts[dept]++;
-            
-            if (role) {
-                const subKey = `${dept}_${role}`;
-                appData.subCounts[subKey] = (appData.subCounts[subKey] || 0) + 1;
-            }
-
             const currentHour = new Date().getHours();
-            
-            if (!appData.hourlyCounts[currentHour]) appData.hourlyCounts[currentHour] = {};
-            appData.hourlyCounts[currentHour][dept] = (appData.hourlyCounts[currentHour][dept] || 0) + 1;
 
-            if (!appData.hourlySubCounts[currentHour]) appData.hourlySubCounts[currentHour] = {};
-            
-            if (role) {
-                const subKey = `${dept}_${role}`;
-                appData.hourlySubCounts[currentHour][subKey] = (appData.hourlySubCounts[currentHour][subKey] || 0) + 1;
-            }
-
-            // Show Feedback
+            // Show Feedback Immediately
             const overlay = document.getElementById('thankYouOverlay');
             const card = document.getElementById('thankYouCard');
             overlay.classList.remove('hidden');
@@ -529,10 +524,26 @@
                 setTimeout(() => { overlay.classList.add('hidden'); }, 300);
             }, 1500);
 
+            // Sync to Firebase Atomic Updates
             if (currentUser) {
                 const summaryDocRef = doc(db, 'voting_app', 'stats');
+                
+                // Construct atomic updates
+                const updates = {};
+                updates[`deptCounts.${dept}`] = increment(1);
+                
+                if (role) {
+                    updates[`subCounts.${dept}_${role}`] = increment(1);
+                }
+                
+                updates[`hourlyCounts.${currentHour}.${dept}`] = increment(1);
+                
+                if (role) {
+                    updates[`hourlySubCounts.${currentHour}.${dept}_${role}`] = increment(1);
+                }
+
                 try {
-                    await setDoc(summaryDocRef, appData);
+                    await updateDoc(summaryDocRef, updates);
                 } catch (e) {
                     console.error("Save failed:", e);
                 }
@@ -703,7 +714,6 @@
             breakdownHtml += `</div>`;
             document.getElementById('totalVotesBreakdown').innerHTML = breakdownHtml;
 
-            // Re-initialize icons here because new HTML was injected
             createIcons({ icons });
 
             if (currentTab === 'dept') {
@@ -896,7 +906,6 @@
             modal.classList.remove('hidden');
             modal.classList.add('fade-in');
             
-            // Re-init icons inside modal
             createIcons({ icons });
         };
 
@@ -926,7 +935,6 @@
             window.renderStats();
         };
         
-        // Initialize static icons on load
         createIcons({ icons });
         
     </script>
