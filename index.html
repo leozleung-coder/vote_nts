@@ -512,10 +512,12 @@
         window.processVote = async function(dept, role) {
             console.log("Processing vote for:", dept, "Role:", role);
             
-            // Safety: Ensure Dept exists in data
-            if (typeof appData.deptCounts[dept] === 'undefined') {
-                appData.deptCounts[dept] = 0;
-            }
+            // Safety checks
+            if (!appData.deptCounts) appData.deptCounts = {};
+            if (typeof appData.deptCounts[dept] === 'undefined') appData.deptCounts[dept] = 0;
+            if (!appData.subCounts) appData.subCounts = {};
+            if (!appData.hourlyCounts) appData.hourlyCounts = {};
+            if (!appData.hourlySubCounts) appData.hourlySubCounts = {};
 
             // Optimistic Update
             appData.deptCounts[dept]++;
@@ -533,7 +535,6 @@
             appData.hourlyCounts[currentHour][dept] = (appData.hourlyCounts[currentHour][dept] || 0) + 1;
 
             // Update Hourly Sub Count (New)
-            if (!appData.hourlySubCounts) appData.hourlySubCounts = {};
             if (!appData.hourlySubCounts[currentHour]) appData.hourlySubCounts[currentHour] = {};
             
             if (role) {
@@ -710,16 +711,33 @@
                 });
             }
 
+            // Calculate votes for Non-Police Departments (D)
+            const deptVotes = OTHER_DEPARTMENTS.reduce((sum, d) => sum + (appData.deptCounts[d] || 0), 0);
+
+            // Calculate Uncategorized (Legacy data from before role selection was added)
+            const uncategorized = total - (r + a + c + deptVotes);
+
             // Render Breakdown
-            const breakdownHtml = `
-                <div class="flex items-center gap-1.5 bg-gray-100 px-2 py-1 rounded-md">
-                    <span title="Regular" class="text-blue-700 font-bold">R: ${r}</span>
+            let breakdownHtml = `
+                <div class="flex items-center gap-1.5 bg-gray-100 px-2 py-1 rounded-md overflow-x-auto no-scrollbar">
+                    <span title="Regular" class="text-blue-700 font-bold whitespace-nowrap">R: ${r}</span>
                     <span class="text-gray-300">|</span>
-                    <span title="Auxiliary" class="text-indigo-700 font-bold">A: ${a}</span>
+                    <span title="Auxiliary" class="text-indigo-700 font-bold whitespace-nowrap">A: ${a}</span>
                     <span class="text-gray-300">|</span>
-                    <span title="Civilian" class="text-teal-700 font-bold">C: ${c}</span>
-                </div>
+                    <span title="Civilian" class="text-teal-700 font-bold whitespace-nowrap">C: ${c}</span>
+                    <span class="text-gray-300">|</span>
+                    <span title="Other Depts" class="text-stone-600 font-bold whitespace-nowrap">D: ${deptVotes}</span>
             `;
+
+            // Only show Uncategorized if they exist (fixes "not adding up" confusion)
+            if (uncategorized > 0) {
+                breakdownHtml += `
+                    <span class="text-gray-300">|</span>
+                    <span title="Legacy/Unknown" class="text-gray-400 font-bold whitespace-nowrap">?: ${uncategorized}</span>
+                `;
+            }
+
+            breakdownHtml += `</div>`;
             document.getElementById('totalVotesBreakdown').innerHTML = breakdownHtml;
 
             if (currentTab === 'dept') {
