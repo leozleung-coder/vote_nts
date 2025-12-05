@@ -69,7 +69,7 @@
         <!-- Content Container -->
         <div class="flex-1 flex flex-col gap-2 min-h-0 pb-12">
             
-            <!-- Formations Section -->
+            <!-- Formations Section (Increased flex ratio to 3) -->
             <div class="flex flex-col flex-[3] gap-1 min-h-0">
                 <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wide border-b border-gray-200 pb-1 shrink-0">Formations</h2>
                 <!-- Only trigger handleSelection for these to open sub-modal -->
@@ -110,18 +110,18 @@
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">RHQ</span>
                     </button>
 
-                    <!-- New Non-NTS Formation -->
+                    <!-- Non-NTS Formation -->
                     <button onclick="window.handleSelection('Non-NTS')" class="vote-btn flex flex-col items-center justify-center bg-neutral-600 hover:bg-neutral-700 text-white rounded-xl shadow-md transition-all duration-200 col-span-3">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">Non-NTS</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Departments Section -->
-            <div class="flex flex-col flex-[2] gap-1 min-h-0">
+            <!-- Departments Section (Decreased flex ratio to 1) -->
+            <div class="flex flex-col flex-[1] gap-1 min-h-0">
                 <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wide border-b border-gray-200 pb-1 shrink-0">Departments</h2>
-                <!-- Direct voting for these -->
-                <div class="grid grid-cols-3 gap-2 flex-1 min-h-0">
+                <!-- Changed to 2 columns for better fit -->
+                <div class="grid grid-cols-2 gap-2 flex-1 min-h-0">
                     <button onclick="window.handleSelection('FSD')" class="vote-btn flex flex-col items-center justify-center bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">FSD</span>
                     </button>
@@ -130,15 +130,11 @@
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">C&E</span>
                     </button>
 
-                    <button onclick="window.handleSelection('IMMD')" class="vote-btn flex flex-col items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl shadow-md transition-all duration-200">
-                        <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">IMMD</span>
-                    </button>
-
                     <button onclick="window.handleSelection('GFS')" class="vote-btn flex flex-col items-center justify-center bg-sky-500 hover:bg-sky-600 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">GFS</span>
                     </button>
 
-                    <button onclick="window.handleSelection('Others')" class="vote-btn flex flex-col items-center justify-center bg-stone-500 hover:bg-stone-600 text-white rounded-xl shadow-md transition-all duration-200 col-span-2">
+                    <button onclick="window.handleSelection('Others')" class="vote-btn flex flex-col items-center justify-center bg-stone-500 hover:bg-stone-600 text-white rounded-xl shadow-md transition-all duration-200">
                         <span class="text-2xl md:text-4xl font-bold text-center break-words max-w-full px-1">Others</span>
                     </button>
                 </div>
@@ -359,9 +355,8 @@
         lucide.createIcons();
 
         // Data Management
-        // ADDED 'Non-NTS' to POLICE_FORMATIONS
         const POLICE_FORMATIONS = ['TWDIST', 'KWTDIST', 'STDIST', 'APTDIST', 'LTDIST', 'Traffic', 'OPS', 'Crime', 'RHQ', 'Non-NTS'];
-        const OTHER_DEPARTMENTS = ['FSD', 'C&E', 'IMMD', 'GFS', 'Others'];
+        const OTHER_DEPARTMENTS = ['FSD', 'C&E', 'GFS', 'Others'];
         const DEPARTMENTS = [...POLICE_FORMATIONS, ...OTHER_DEPARTMENTS];
         
         // Distinct Colors Map
@@ -375,10 +370,10 @@
             'OPS': 'bg-red-600',
             'Crime': 'bg-cyan-600',
             'RHQ': 'bg-[#CEADDE]',
-            'Non-NTS': 'bg-neutral-600', // New Color
+            'Non-NTS': 'bg-neutral-600',
             'FSD': 'bg-rose-600',
             'C&E': 'bg-[#B2D631]',
-            'IMMD': 'bg-yellow-600',
+            'IMMD': 'bg-yellow-600', // Removed from list but kept color just in case
             'GFS': 'bg-sky-500',
             'Others': 'bg-stone-500'
         };
@@ -401,7 +396,7 @@
             deptCounts: {},
             hourlyCounts: {},
             subCounts: {}, 
-            hourlySubCounts: {} // New: Tracks role breakdown per hour
+            hourlySubCounts: {} 
         };
         
         let currentUser = null;
@@ -413,7 +408,7 @@
             DEPARTMENTS.forEach(d => data.deptCounts[d] = 0);
             for(let i=0; i<24; i++) {
                 data.hourlyCounts[i] = {};
-                data.hourlySubCounts[i] = {}; // Init hourly sub container
+                data.hourlySubCounts[i] = {}; 
                 DEPARTMENTS.forEach(d => data.hourlyCounts[i][d] = 0);
             }
             return data;
@@ -458,7 +453,6 @@
                             }
                         }
                     }
-                    // Merge Hourly Sub Counts
                     if (data.hourlySubCounts) {
                         for(let i=0; i<24; i++) {
                             if (data.hourlySubCounts[i]) {
@@ -479,7 +473,7 @@
             });
         }
 
-        // --- GLOBAL FUNCTIONS ATTACHED TO WINDOW ---
+        // --- GLOBAL FUNCTIONS ---
 
         window.toggleFullscreen = function() {
             if (!document.fullscreenElement) {
@@ -529,7 +523,6 @@
             // Optimistic Update
             appData.deptCounts[dept]++;
             
-            // Update Sub Count (Total)
             if (role) {
                 const subKey = `${dept}_${role}`;
                 appData.subCounts[subKey] = (appData.subCounts[subKey] || 0) + 1;
@@ -537,11 +530,9 @@
 
             const currentHour = new Date().getHours();
             
-            // Update Hourly Count
             if (!appData.hourlyCounts[currentHour]) appData.hourlyCounts[currentHour] = {};
             appData.hourlyCounts[currentHour][dept] = (appData.hourlyCounts[currentHour][dept] || 0) + 1;
 
-            // Update Hourly Sub Count (New)
             if (!appData.hourlySubCounts[currentHour]) appData.hourlySubCounts[currentHour] = {};
             
             if (role) {
@@ -575,7 +566,6 @@
                 }
             }
         };
-        // Kept for backwards compatibility if needed
         window.castVote = function(dept) { window.handleSelection(dept); };
 
 
@@ -736,7 +726,6 @@
                     <span title="Other Depts" class="text-stone-600 font-bold whitespace-nowrap">D: ${deptVotes}</span>
             `;
 
-            // Only show Uncategorized if they exist (fixes "not adding up" confusion)
             if (uncategorized > 0) {
                 breakdownHtml += `
                     <span class="text-gray-300">|</span>
